@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <title>CATCH | Active Counting</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+  </head>
+
+  <body class="layout-admin aside-sticky bg-light header-sticky">
+
+    <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+      <!-- HEADER (Consistent with index.html) -->
+      <header id="header" class="d-flex align-items-center shadow-xs bg-white">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+            <div class="align-items-start">
+              <a class="navbar-brand d-none d-lg-block mx-2" href="index.html">
+                <span class="h4 fw-bold text-primary">CATCH</span>
+              </a>
+            </div>
+            <ul class="list-inline list-unstyled mb-0 d-flex">
+              <li class="list-inline-item mx-1 dropdown">
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)" data-bs-toggle="dropdown"></a>
+                <div class="dropdown-menu dropdown-menu-clean dropdown-menu-invert p-0 mt-2 w-300">
+                    <div class="dropdown-header bg-primary text-white p-4">Admin User</div>
+                    <a href="#" class="dropdown-item"><i class="fi fi-user me-2"></i> My Profile</a>
+                    <a href="#" class="dropdown-item"><i class="fi fi-settings me-2"></i> Account Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-footer fw-medium py-3 px-4"><i class="fi fi-power float-start"></i> Log Out</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <div id="wrapper_content" class="d-flex flex-fill">
+
+        <!-- SIDEBAR -->
+        <!-- UNIFIED CATCH SIDEBAR -->
+        <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
+        <div class="py-4 px-3 mb-3 border-bottom text-center">
+            <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+            <small class="text-muted fw-bold text-uppercase">Service Track</small>
+        </div>
+
+        <nav class="nav-deep nav-deep-sm nav-deep-light">
+            <ul class="nav flex-column">
+            
+            <!-- Main Navigation -->
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                <i class="fi fi-layers"></i> <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="active-counting.html">
+                <i class="fi fi-video"></i> <span>Active Counting</span>
+                <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="reports.html">
+                <i class="fi fi-chart-line"></i> <span>Reports/Analytics</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="records.html">
+                <i class="fi fi-database"></i> <span>Attendance Records</span>
+                </a>
+            </li>
+
+            <!-- Placeholders (As requested previously) -->
+            <li class="nav-title mt-4"><h6 class="smaller text-muted text-uppercase">Placeholder 1</h6></li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fi fi-folder"></i> <span>Extra Page A</span></a>
+            </li>
+
+            <li class="nav-title mt-4"><h6 class="smaller text-muted text-uppercase">Placeholder 2</h6></li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fi fi-star"></i> <span>Extra Page B</span></a>
+            </li>
+
+            </ul>
+        </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main id="middle" class="flex-fill p-4">
+          
+          <header class="mb-5 text-center">
+            <h1 class="h4">New Counting Session</h1>
+            <p class="text-muted">Follow the steps below to track attendance for a service zone.</p>
+          </header>
+
+          <!-- PROCESS STEPS COMPONENT -->
+          <div class="card shadow-xs border-0 p-5 mb-4">
+            <ol class="process-steps process-steps-primary text-muted mb-6">
+              <li class="process-step-item text-primary active">
+                <span class="d-block fw-bold">Step 1</span>
+                <span class="small">Session Setup</span>
+              </li>
+              <li class="process-step-item">
+                <span class="d-block fw-bold text-gray-500">Step 2</span>
+                <span class="small text-gray-500">Snapshot</span>
+              </li>
+              <li class="process-step-item">
+                <span class="d-block fw-bold text-gray-500">Step 3</span>
+                <span class="small text-gray-500">ML Detection</span>
+              </li>
+              <li class="process-step-item">
+                <span class="d-block fw-bold text-gray-500">Step 4</span>
+                <span class="small text-gray-500">Finalize</span>
+              </li>
+            </ol>
+
+            <hr class="my-5">
+
+            <!-- STEP 1 CONTENT: SETUP -->
+            <div id="step-content" class="mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold mb-4">Configure Session</h5>
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Select Service</label>
+                    <select class="form-select border-primary shadow-none">
+                        <option selected disabled>Choose a service...</option>
+                        <option>Sunday Morning Service (9:00 AM)</option>
+                        <option>Sunday Evening Service (5:00 PM)</option>
+                        <option>Midweek Service</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Target Zone</label>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100 py-3">Main Hall</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100 py-3">Balcony</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100 py-3">Left Wing</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-primary w-100 py-3">Right Wing</button>
+                        </div>
+                    </div>
+                    <small class="text-danger mt-2 d-block">* Only one session allowed per zone per service.</small>
+                </div>
+
+                <div class="mt-5 text-end">
+                    <button class="btn btn-primary px-5 shadow-none">Next: Take Snapshot <i class="fi fi-arrow-end ms-2"></i></button>
+                </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+
+      <footer id="footer" class="bg-white border-top p-3 text-center small text-muted">
+        &copy; 2026 CATCH | Powered by iTED Business & Operations
+      </footer>
+
+    </div>
+
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+  </body>
+</html>
