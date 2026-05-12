@@ -44,130 +44,266 @@
         <!-- SIDEBAR -->
         <!-- UNIFIED CATCH SIDEBAR -->
         <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
-        <div class="py-4 px-3 mb-3 border-bottom text-center">
-            <h4 class="fw-bold text-primary mb-0">CATCH</h4>
-            <small class="text-muted fw-bold text-uppercase">Service Track</small>
-        </div>
+  
+  <div class="py-4 px-3 mb-3 border-bottom text-center">
+    <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+    <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
+  </div>
 
-        <nav class="nav-deep nav-deep-sm nav-deep-light">
-            <ul class="nav flex-column">
-            
-            <!-- Main Navigation -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                <i class="fi fi-layers"></i> <span>Dashboard</span>
-                </a>
-            </li>
+  <nav class="nav-deep nav-deep-sm nav-deep-light">
+    <ul class="nav flex-column">
+      
+      <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <span>Dashboard</span>
+        </a>
+      </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="active-counting.html">
-                <i class="fi fi-video"></i> <span>Active Counting</span>
-                <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
-                </a>
-            </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="active-counting.html">
+          <span>Active Counting</span>
+          <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
+        </a>
+      </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="reports.html">
-                <i class="fi fi-chart-line"></i> <span>Reports/Analytics</span>
-                </a>
-            </li>
+      <li class="nav-item">
+        <a class="nav-link" href="reports.html">
+          <span>Reports/Analytics</span>
+        </a>
+      </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="records.html">
-                <i class="fi fi-database"></i> <span>Attendance Records</span>
-                </a>
-            </li>
+      <li class="nav-item border-bottom pb-3">
+        <a class="nav-link" href="records.html">
+          <span>Attendance Records</span>
+        </a>
+      </li>
 
-            <!-- Placeholders (As requested previously) -->
-            <li class="nav-title mt-4"><h6 class="smaller text-muted text-uppercase">Placeholder 1</h6></li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fi fi-folder"></i> <span>Extra Page A</span></a>
-            </li>
+      <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="profile.html">
+          <span>My Profile</span>
+        </a>
+      </li>
 
-            <li class="nav-title mt-4"><h6 class="smaller text-muted text-uppercase">Placeholder 2</h6></li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fi fi-star"></i> <span>Extra Page B</span></a>
-            </li>
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">
+          <span>System Settings</span>
+        </a>
+      </li>
 
-            </ul>
-        </nav>
-        </aside>
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  /* Refined Text-Only Styling */
+  #aside-main .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem; 
+    color: #495057;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+
+  /* Active and Hover States */
+  #aside-main .nav-item.active .nav-link,
+  #aside-main .nav-link:hover {
+    color: #007bff;
+    background-color: #f8f9fa;
+  }
+
+  /* Left accent line for the active page */
+  #aside-main .nav-item.active {
+    border-left: 4px solid #007bff;
+  }
+
+  #aside-main .nav-title {
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+</style>
 
         <!-- MAIN CONTENT -->
         <main id="middle" class="flex-fill p-4">
-          
-          <header class="mb-5 text-center">
-            <h1 class="h4">New Counting Session</h1>
-            <p class="text-muted">Follow the steps below to track attendance for a service zone.</p>
-          </header>
+            <header class="mb-5 text-center">
+                <h1 class="h4">New Counting Session</h1>
+                <p class="text-muted">Follow the steps below to track attendance for a service zone.</p>
+            </header>
 
-          <!-- PROCESS STEPS COMPONENT -->
-          <div class="card shadow-xs border-0 p-5 mb-4">
-            <ol class="process-steps process-steps-primary text-muted mb-6">
-              <li class="process-step-item text-primary active">
-                <span class="d-block fw-bold">Step 1</span>
-                <span class="small">Session Setup</span>
-              </li>
-              <li class="process-step-item">
-                <span class="d-block fw-bold text-gray-500">Step 2</span>
-                <span class="small text-gray-500">Snapshot</span>
-              </li>
-              <li class="process-step-item">
-                <span class="d-block fw-bold text-gray-500">Step 3</span>
-                <span class="small text-gray-500">ML Detection</span>
-              </li>
-              <li class="process-step-item">
-                <span class="d-block fw-bold text-gray-500">Step 4</span>
-                <span class="small text-gray-500">Finalize</span>
-              </li>
-            </ol>
+            <div class="card shadow-xs border-0 p-5 mb-4">
+                <!-- PROCESS STEPS -->
+                <ol class="process-steps process-steps-primary text-muted mb-6" id="process-header">
+                <li class="process-step-item active" id="step1-tab">
+                    <span class="d-block fw-bold">Step 1</span>
+                    <span class="small">Session Setup</span>
+                </li>
+                <li class="process-step-item" id="step2-tab">
+                    <span class="d-block fw-bold">Step 2</span>
+                    <span class="small">Snapshot</span>
+                </li>
+                <li class="process-step-item" id="step3-tab">
+                    <span class="d-block fw-bold">Step 3</span>
+                    <span class="small">ML Detection</span>
+                </li>
+                <li class="process-step-item" id="step4-tab">
+                    <span class="d-block fw-bold">Step 4</span>
+                    <span class="small">Finalize</span>
+                </li>
+                </ol>
 
-            <hr class="my-5">
+                <hr class="my-5">
 
-            <!-- STEP 1 CONTENT: SETUP -->
-            <div id="step-content" class="mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold mb-4">Configure Session</h5>
-                
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Select Service</label>
-                    <select class="form-select border-primary shadow-none">
-                        <option selected disabled>Choose a service...</option>
-                        <option>Sunday Morning Service (9:00 AM)</option>
-                        <option>Sunday Evening Service (5:00 PM)</option>
-                        <option>Midweek Service</option>
-                    </select>
-                </div>
+                <!-- STEP 1: SETUP -->
+                <div id="step1-content" class="step-pane mx-auto" style="max-width: 600px;">
+  <h5 class="fw-bold mb-4">1. Configure Session</h5>
+  
+  <div class="mb-4 text-start">
+    <label class="form-label fw-bold small text-muted">SELECT SERVICE</label>
+    <select class="form-select border-primary shadow-none py-3">
+      <option selected disabled>Choose a service...</option>
+      <option>Sunday Morning Service (9:00 AM)</option>
+      <option>Sunday Evening Service (5:00 PM)</option>
+      <option>Midweek Service (7:00 PM)</option>
+    </select>
+  </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Target Zone</label>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100 py-3">Main Hall</button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100 py-3">Balcony</button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100 py-3">Left Wing</button>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-outline-primary w-100 py-3">Right Wing</button>
-                        </div>
-                    </div>
-                    <small class="text-danger mt-2 d-block">* Only one session allowed per zone per service.</small>
-                </div>
+  <div class="mb-4 text-start">
+    <label class="form-label fw-bold small text-muted">TARGET ZONE</label>
+    <div class="row g-2" id="zone-container">
+      <div class="col-6 col-md-4">
+        <div class="zone-card active" onclick="selectZone(this)">
+          <span>Main Hall</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="zone-card" onclick="selectZone(this)">
+          <span>Balcony</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="zone-card" onclick="selectZone(this)">
+          <span>East Wing</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div class="mt-5 text-end">
-                    <button class="btn btn-primary px-5 shadow-none">Next: Take Snapshot <i class="fi fi-arrow-end ms-2"></i></button>
-                </div>
+  <div class="text-end mt-5">
+    <button class="btn btn-primary btn-lg px-5 shadow-sm" onclick="goToStep(2)">
+      Next: Take Snapshot <i class="fi fi-arrow-end ms-2"></i>
+    </button>
+  </div>
             </div>
-          </div>
 
-        </main>
+            <style>
+            /* Improved Zone Selection Styling */
+            .zone-card {
+                cursor: pointer;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 1.5rem 1rem;
+                text-align: center;
+                transition: all 0.2s ease-in-out;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-weight: 500;
+            }
+            .zone-card i { font-size: 1.5rem; color: #adb5bd; }
+            .zone-card:hover { border-color: #007bff; background: #f8f9ff; }
+            
+            
+            .zone-card.active {
+                border-color: #007bff;
+                background-color: #f0f7ff;
+                color: #007bff;
+                box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+            }
+            .zone-card.active i { color: #007bff; }
+            </style>
+
+            <script>
+            function selectZone(element) {
+                // Remove active class from all zones
+                document.querySelectorAll('.zone-card').forEach(el => el.classList.remove('active'));
+                // Add to the clicked one
+                element.classList.add('active');
+            }
+            </script>
+
+                <!-- STEP 2: SNAPSHOT -->
+                <div id="step2-content" class="step-pane d-none mx-auto text-center" style="max-width: 600px;">
+                <h5 class="fw-bold mb-4">2. Capture Zone Snapshot</h5>
+                <div class="bg-light border rounded p-5 mb-4">
+                    <i class="fi fi-camera display-4 text-gray-400 mb-3 d-block"></i>
+                    <p class="text-muted">Camera interface will initialize here.</p>
+                    <button class="btn btn-sm btn-secondary">Upload Manually</button>
+                </div>
+                <div class="d-flex justify-content-between mt-5">
+                    <button class="btn btn-light px-4" onclick="goToStep(1)">Back</button>
+                    <button class="btn btn-primary px-5" onclick="goToStep(3)">Capture & Process <i class="fi fi-arrow-end ms-2"></i></button>
+                </div>
+                </div>
+
+                <!-- STEP 3: ML DETECTION -->
+                <div id="step3-content" class="step-pane d-none mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold mb-4 text-center">3. ML Head Detection</h5>
+                <div class="position-relative mb-4">
+                    <img src="assets/images/demo/church-crowd.jpg" class="img-fluid rounded shadow" alt="Detection Result">
+                    <div class="position-absolute top-0 end-0 m-3 badge bg-success p-2">ML ACTIVE: 562 Heads Found</div>
+                </div>
+                <div class="alert alert-info py-2 small">Algorithm: YOLOv5 optimized for high-density counting[cite: 8].</div>
+                <div class="d-flex justify-content-between mt-5">
+                    <button class="btn btn-light px-4" onclick="goToStep(2)">Retake</button>
+                    <button class="btn btn-primary px-5" onclick="goToStep(4)">Review & Finalize <i class="fi fi-arrow-end ms-2"></i></button>
+                </div>
+                </div>
+
+                <!-- STEP 4: FINALIZE -->
+                <div id="step4-content" class="step-pane d-none mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold mb-4 text-center">4. Save Attendance Record</h5>
+                <div class="bg-white border rounded p-4 mb-4">
+                    <div class="row mb-2"><div class="col-6 text-muted">Service ID:</div><div class="col-6 fw-bold">SVC-2026-0519-01</div></div>
+                    <div class="row mb-2"><div class="col-6 text-muted">Zone:</div><div class="col-6 fw-bold">Main Hall</div></div>
+                    <div class="row mb-2"><div class="col-6 text-muted">Final Count:</div><div class="col-6 fw-bold text-primary h4 mb-0">562</div></div>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-success btn-lg px-5 shadow-lg w-100" onclick="alert('Record Saved to Firebase!')">
+                        <i class="fi fi-check me-2"></i> Confirm & Save to Firebase
+                    </button>
+                    <button class="btn btn-link text-muted mt-3" onclick="goToStep(1)">Start New Counting</button>
+                </div>
+                </div>
+
+            </div>
+            </main>
       </div>
 
+      <!-- SIMPLE STEP TOGGLER -->
+        <script>
+        function goToStep(stepNumber) {
+            // Hide all contents
+            document.querySelectorAll('.step-pane').forEach(el => el.classList.add('d-none'));
+            // Show current content
+            document.getElementById('step' + stepNumber + '-content').classList.remove('d-none');
+            
+            // Update process header
+            document.querySelectorAll('.process-step-item').forEach((el, index) => {
+            el.classList.remove('active', 'complete', 'text-primary');
+            if (index + 1 < stepNumber) el.classList.add('complete');
+            if (index + 1 === stepNumber) el.classList.add('active', 'text-primary');
+            });
+        }
+        </script>
+
       <footer id="footer" class="bg-white border-top p-3 text-center small text-muted">
-        &copy; 2026 CATCH | Powered by iTED Business & Operations
+        &copy; 2026 CATCH
       </footer>
 
     </div>
