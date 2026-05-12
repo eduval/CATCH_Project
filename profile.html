@@ -45,62 +45,143 @@
             <h4 class="fw-bold text-primary mb-0">CATCH</h4>
             <small class="text-muted fw-bold text-uppercase">Service Track</small>
           </div>
+
           <nav class="nav-deep nav-deep-sm nav-deep-light">
             <ul class="nav flex-column">
-              <li class="nav-item"><a class="nav-link" href="index.html"><i class="fi fi-layers"></i> <span>Dashboard</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="active-counting.html"><i class="fi fi-video"></i> <span>Active Counting</span><span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="#"><i class="fi fi-chart-line"></i> <span>Reports/Analytics</span></a></li>
-              <li class="nav-item border-bottom pb-2"><a class="nav-link" href="#"><i class="fi fi-database"></i> <span>Attendance Records</span></a></li>
-              <li class="nav-item active mt-4"><a class="nav-link" href="profile.html"><i class="fi fi-user"></i> <span>Profile</span></a></li>
-              <li class="nav-item"><a class="nav-link" href="#"><i class="fi fi-settings"></i> <span>Settings</span></a></li>
+              
+              <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2">Operations</li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html"><i class="fi fi-layers"></i> <span>Dashboard</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="active-counting.html">
+                  <i class="fi fi-video"></i> <span>Active Counting</span>
+                  <span class="badge bg-danger-soft text-danger ms-auto smaller">LIVE</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="reports.html"><i class="fi fi-chart-line"></i> <span>Reports/Analytics</span></a>
+              </li>
+              <li class="nav-item border-bottom pb-3">
+                <a class="nav-link" href="records.html"><i class="fi fi-database"></i> <span>Attendance Records</span></a>
+              </li>
+
+              <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2">Management</li>
+              <li class="nav-item">
+                <a class="nav-link" href="profile.html"><i class="fi fi-user"></i> <span>My Profile</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="settings.html">
+                  <i class="fi fi-settings"></i> <span>System Settings</span>
+                </a>
+              </li>
+
             </ul>
           </nav>
         </aside>
 
         <main id="middle" class="flex-fill p-4">
-          <header class="mb-4">
-            <h1 class="h4">My Profile</h1>
-            <p class="text-muted small">Manage your account information and credentials.</p>
-          </header>
+  <header class="mb-4">
+    <h1 class="h4">My Profile</h1>
+    <p class="text-muted small">Manage your account information and credentials.</p>
+  </header>
 
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="card shadow-xs border-0 text-center p-4 h-100">
-                <div class="mb-3">
-                  <img src="assets/images/avatars/admin.jpg" class="rounded-circle shadow" width="120" height="120" alt="Admin">
-                </div>
-                <h5 class="fw-bold mb-1 text-start text-center-xs">Admin User</h5>
-                <p class="text-muted small mb-3">System Administrator</p>
-                <button class="btn btn-sm btn-outline-primary">Update Photo</button>
-              </div>
-            </div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-xs border-0 text-center p-4 h-100">
+        <div class="mb-3">
+          <img src="assets/images/avatars/admin.jpg" class="rounded-circle shadow" width="120" height="120" alt="Admin">
+        </div>
+        <h5 class="fw-bold mb-1 text-center">Admin User</h5>
+        <p class="text-muted small mb-3">System Administrator</p>
+        <button class="btn btn-sm btn-outline-primary">Update Photo</button>
+      </div>
+    </div>
 
-            <div class="col-md-8">
-              <div class="card shadow-xs border-0 p-4 h-100 text-start">
-                <h6 class="fw-bold mb-4 border-bottom pb-2">Account Details</h6>
-                <div class="row mb-3">
-                  <div class="col-sm-3 text-muted small fw-bold">FULL NAME</div>
-                  <div class="col-sm-9">Admin User</div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3 text-muted small fw-bold">EMAIL</div>
-                  <div class="col-sm-9">admin@catch.hub</div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3 text-muted small fw-bold">ROLE</div>
-                  <div class="col-sm-9"><span class="badge bg-primary-soft text-primary">Administrator</span></div>
-                </div>
-                <div class="mt-4">
-                  <button class="btn btn-primary px-4">Edit Profile</button>
-                </div>
-              </div>
-            </div>
+    <div class="col-md-8">
+      <div class="card shadow-xs border-0 p-4 h-100 text-start">
+        <h6 class="fw-bold mb-4 border-bottom pb-2">Account Details</h6>
+
+        <div id="profile-view-mode">
+          <div class="row mb-3">
+            <div class="col-sm-3 text-muted small fw-bold text-uppercase">Full Name</div>
+            <div class="col-sm-9" id="display-name">Admin User</div>
           </div>
-        </main>
+          <div class="row mb-3">
+            <div class="col-sm-3 text-muted small fw-bold text-uppercase">Email</div>
+            <div class="col-sm-9" id="display-email">admin@catch.hub</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3 text-muted small fw-bold text-uppercase">Role</div>
+            <div class="col-sm-9"><span class="badge bg-primary-soft text-primary">Administrator</span></div>
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-primary px-4" onclick="toggleEdit(true)">
+                <i class="fi fi-pencil me-2"></i> Edit Profile
+            </button>
+          </div>
+        </div>
+
+        <div id="profile-edit-mode" class="d-none">
+          <form onsubmit="saveProfile(event)">
+            <div class="mb-3">
+              <label class="form-label fw-bold small">FULL NAME</label>
+              <input type="text" id="input-name" class="form-control" value="Admin User">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold small">EMAIL ADDRESS</label>
+              <input type="email" id="input-email" class="form-control" value="admin@catch.hub">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold small">NEW PASSWORD (Optional)</label>
+              <input type="password" class="form-control" placeholder="Leave blank to keep current">
+            </div>
+            
+            <div class="mt-4 pt-2">
+              <button type="submit" class="btn btn-success px-4">Save Changes</button>
+              <button type="button" class="btn btn-light px-4 ms-2" onclick="toggleEdit(false)">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    </main>
+
+    <script>
+      function toggleEdit(isEditing) {
+        if (isEditing) {
+          document.getElementById('profile-view-mode').classList.add('d-none');
+          document.getElementById('profile-edit-mode').classList.remove('d-none');
+        } else {
+          document.getElementById('profile-view-mode').classList.remove('d-none');
+          document.getElementById('profile-edit-mode').classList.add('d-none');
+        }
+      }
+
+      function saveProfile(event) {
+        event.preventDefault();
+        
+        // Get values from inputs
+        const newName = document.getElementById('input-name').value;
+        const newEmail = document.getElementById('input-email').value;
+
+        // Update display (for the demo)
+        document.getElementById('display-name').innerText = newName;
+        document.getElementById('display-email').innerText = newEmail;
+
+        // Switch back to view mode
+        toggleEdit(false);
+        
+        // Placeholder alert
+        alert('Profile updated locally! (Backend sync pending)');
+      }
+    </script>
       </div>
 
       <footer id="footer" class="bg-white border-top p-3 text-center small text-muted">
-        &copy; 2026 CATCH | Powered by iTED Business & Operations
+        &copy; 2026 CATCH
       </footer>
 
     </div>

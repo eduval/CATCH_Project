@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CATCH | System Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/core.min.css">
+  <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+</head>
+
+<body class="layout-admin aside-sticky bg-light header-sticky">
+
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+    <header id="header" class="d-flex align-items-center shadow-xs bg-white">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+          <a class="navbar-brand mx-2" href="index.html"><span class="h4 fw-bold text-primary">CATCH</span></a>
+          <div class="ms-auto">
+             <a href="profile.html" class="btn btn-sm btn-icon btn-light rounded-circle shadow-sm bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)"></a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <div id="wrapper_content" class="d-flex flex-fill">
+
+      <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
+          <div class="py-4 px-3 mb-3 border-bottom text-center">
+            <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+            <small class="text-muted fw-bold text-uppercase">Service Track</small>
+          </div>
+
+          <nav class="nav-deep nav-deep-sm nav-deep-light">
+            <ul class="nav flex-column">
+              
+              <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2">Operations</li>
+              <li class="nav-item">
+                <a class="nav-link" href="index.html"><i class="fi fi-layers"></i> <span>Dashboard</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="active-counting.html">
+                  <i class="fi fi-video"></i> <span>Active Counting</span>
+                  <span class="badge bg-danger-soft text-danger ms-auto smaller">LIVE</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="reports.html"><i class="fi fi-chart-line"></i> <span>Reports/Analytics</span></a>
+              </li>
+              <li class="nav-item border-bottom pb-3">
+                <a class="nav-link" href="records.html"><i class="fi fi-database"></i> <span>Attendance Records</span></a>
+              </li>
+
+              <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2">Management</li>
+              <li class="nav-item">
+                <a class="nav-link" href="profile.html"><i class="fi fi-user"></i> <span>My Profile</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="settings.html">
+                  <i class="fi fi-settings"></i> <span>System Settings</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </aside>
+
+      <main id="middle" class="flex-fill p-4">
+        
+        <header class="mb-4">
+          <h1 class="h4 text-start">System Settings</h1>
+          <p class="text-muted small text-start">Configure your organization's services and tracking zones.</p>
+        </header>
+
+        <div class="row g-4">
+          
+          <div class="col-lg-7">
+            <div class="card shadow-xs border-0 h-100">
+              <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">Zone Management</h6>
+                <button class="btn btn-sm btn-primary" onclick="addZoneRow()"><i class="fi fi-plus me-1"></i> Add Zone</button>
+              </div>
+              <div class="card-body">
+                <p class="text-muted small mb-4 text-start">Define the physical areas where attendance is tracked.</p>
+                
+                <div class="table-responsive">
+                  <table class="table table-align-middle" id="zone-table">
+                    <thead class="small text-muted text-uppercase">
+                      <tr>
+                        <th class="border-0">Zone Name</th>
+                        <th class="border-0 text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="zone-list">
+                      <tr>
+                        <td><input type="text" class="form-control form-control-sm" value="Main Hall"></td>
+                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control form-control-sm" value="Balcony"></td>
+                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-white border-top-0 p-3 text-end">
+                <button class="btn btn-sm btn-success px-4" onclick="alert('Zones saved to Firebase placeholder!')">Save Configuration</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="card shadow-xs border-0 h-100 text-start">
+              <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold">Service Types</h6>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Active Services</label>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" checked id="s1">
+                    <label class="form-check-label small" for="s1">Sunday Morning (9:00 AM)</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" checked id="s2">
+                    <label class="form-check-label small" for="s2">Sunday Evening (5:00 PM)</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="s3">
+                    <label class="form-check-label small" for="s3">Midweek Prayer (7:00 PM)</label>
+                  </div>
+                </div>
+                <hr>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Add New Service</label>
+                  <input type="text" class="form-control form-control-sm mb-2" placeholder="e.g. Youth Night">
+                  <button class="btn btn-sm btn-outline-primary w-100">Add Service</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function addZoneRow() {
+      const tbody = document.getElementById('zone-list');
+      const row = `<tr>
+        <td><input type="text" class="form-control form-control-sm" placeholder="New Zone Name..."></td>
+        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
+      </tr>`;
+      tbody.insertAdjacentHTML('beforeend', row);
+    }
+  </script>
+
+  <script src="assets/js/core.min.js"></script>
+  <script src="assets/js/vendor_bundle.min.js"></script>
+</body>
+</html>
