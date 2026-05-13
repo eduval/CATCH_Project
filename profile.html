@@ -133,15 +133,19 @@
 
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="card shadow-xs border-0 text-center p-4 h-100">
-        <div class="mb-3">
-          <img src="assets/images/avatars/admin.jpg" class="rounded-circle shadow" width="120" height="120" alt="Admin">
-        </div>
-        <h5 class="fw-bold mb-1 text-center">Admin User</h5>
-        <p class="text-muted small mb-3">System Administrator</p>
-        <button class="btn btn-sm btn-outline-primary">Update Photo</button>
-      </div>
+  <div class="card shadow-xs border-0 text-center p-4 h-100">
+    <div class="mb-3">
+      <!-- Añadimos ID para poder cambiar la imagen con JS -->
+      <img id="profile-avatar" src="assets/images/avatars/admin.jpg" class="rounded-circle shadow" width="120" height="120" alt="Admin">
     </div>
+    <h5 class="fw-bold mb-1 text-center" id="side-name">Admin User</h5>
+    <p class="text-muted small mb-3">System Administrator</p>
+    
+    <!-- Input oculto para subir la foto -->
+    <input type="file" id="photo-upload" style="display:none" accept="image/*" onchange="updateProfilePhoto(this)">
+    <button class="btn btn-sm btn-outline-primary" onclick="document.getElementById('photo-upload').click()">Update Photo</button>
+  </div>
+</div>
 
     <div class="col-md-8">
       <div class="card shadow-xs border-0 p-4 h-100 text-start">
@@ -157,8 +161,11 @@
             <div class="col-sm-9" id="display-email">admin@catch.hub</div>
           </div>
           <div class="row mb-3">
-            <div class="col-sm-3 text-muted small fw-bold text-uppercase">Role</div>
-            <div class="col-sm-9"><span class="badge bg-primary-soft text-primary">Administrator</span></div>
+           <div class="col-sm-3 text-muted small fw-bold text-uppercase">Role</div>
+            <!-- Agregamos id="display-role" al span -->
+            <div class="col-sm-9">
+          <span id="display-role" class="badge bg-primary-soft text-primary">Administrator</span>
+          </div>
           </div>
           <div class="mt-4">
             <button class="btn btn-primary px-4" onclick="toggleEdit(true)">
@@ -178,9 +185,27 @@
               <input type="email" id="input-email" class="form-control" value="admin@catch.hub">
             </div>
             <div class="mb-3">
-              <label class="form-label fw-bold small">NEW PASSWORD (Optional)</label>
-              <input type="password" class="form-control" placeholder="Leave blank to keep current">
-            </div>
+        <label class="form-label fw-bold small">USER ROLE</label>
+        <select id="input-role" class="form-select">
+          <option value="Administrator">Administrator</option>
+          <option value="Operator">Operator</option>
+        </select>
+          </div>
+            <div class="mb-3">
+    <label class="form-label fw-bold small">CURRENT PASSWORD</label>
+   <input type="password" id="current-password" class="form-control" placeholder="Enter current password">
+  </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+      <label class="form-label fw-bold small">NEW PASSWORD</label>
+      <input type="password" id="new-password" class="form-control" placeholder="New password">
+  </div>
+  <div class="col-md-6 mb-3">
+    <label class="form-label fw-bold small">CONFIRM NEW PASSWORD</label>
+    <input type="password" id="confirm-password" class="form-control" placeholder="Confirm new password">
+  </div>
+    </div>
             
             <div class="mt-4 pt-2">
               <button type="submit" class="btn btn-success px-4">Save Changes</button>
@@ -195,33 +220,61 @@
     </main>
 
     <script>
-      function toggleEdit(isEditing) {
-        if (isEditing) {
-          document.getElementById('profile-view-mode').classList.add('d-none');
-          document.getElementById('profile-edit-mode').classList.remove('d-none');
-        } else {
-          document.getElementById('profile-view-mode').classList.remove('d-none');
-          document.getElementById('profile-edit-mode').classList.add('d-none');
+  function toggleEdit(isEditing) {
+    document.getElementById('profile-view-mode').classList.toggle('d-none', isEditing);
+    document.getElementById('profile-edit-mode').classList.toggle('d-none', !isEditing);
+  }
+
+  // Nueva función para actualizar la foto en tiempo real
+  function updateProfilePhoto(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Actualiza el avatar grande y el del header si existe
+        document.getElementById('profile-avatar').src = e.target.result;
+        document.getElementById('dropdownAccountOptions').style.backgroundImage = `url(${e.target.result})`;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function saveProfile(event) {
+    event.preventDefault();
+    
+    const newName = document.getElementById('input-name').value;
+    const newEmail = document.getElementById('input-email').value;
+    const newRole = document.getElementById('input-role').value;
+
+    const currentPass = document.getElementById('current-password').value;
+    const newPass = document.getElementById('new-password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
+
+    // VALIDACIÓN DE SEGURIDAD (Para el QA)
+    if (newPass !== "" || confirmPass !== "") {
+        if (currentPass === "") {
+            alert("Error: You must enter your current password to set a new one.");
+            return;
         }
-      }
+        if (newPass !== confirmPass) {
+            alert("Error: New passwords do not match!");
+            return;
+        }
+        if (newPass.length < 6) {
+            alert("Error: New password must be at least 6 characters long.");
+            return;
+        }
+    }
 
-      function saveProfile(event) {
-        event.preventDefault();
-        
-        // Get values from inputs
-        const newName = document.getElementById('input-name').value;
-        const newEmail = document.getElementById('input-email').value;
+    // Update display
+    document.getElementById('display-name').innerText = newName;
+    document.getElementById('display-email').innerText = newEmail;
+    document.getElementById('display-role').innerText = newRole; // Actualiza el badge del rol
+    document.getElementById('side-name').innerText = newName;
 
-        // Update display (for the demo)
-        document.getElementById('display-name').innerText = newName;
-        document.getElementById('display-email').innerText = newEmail;
+    toggleEdit(false);
+    alert('Profile updated successfully!');
+}
 
-        // Switch back to view mode
-        toggleEdit(false);
-        
-        // Placeholder alert
-        alert('Profile updated locally! (Backend sync pending)');
-      }
     </script>
       </div>
 
