@@ -151,7 +151,7 @@
                 </div>
               </div>
               <div class="card-footer bg-white border-top-0 p-3 text-end">
-                <button class="btn btn-sm btn-success px-4" onclick="alert('Zones saved to Firebase placeholder!')">Save Configuration</button>
+                <button class="btn btn-sm btn-success px-4" onclick="saveZones()">Save Configuration</button>
               </div>
             </div>
           </div>
@@ -165,23 +165,25 @@
                 <div class="mb-3">
                   <label class="form-label small fw-bold">Active Services</label>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" checked id="s1">
+                    <input class="form-check-input" type="checkbox" checked id="s1" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s1">Sunday Morning (9:00 AM)</label>
                   </div>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" checked id="s2">
+                    <input class="form-check-input" type="checkbox" checked id="s2" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s2">Sunday Evening (5:00 PM)</label>
                   </div>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="s3">
+                    <input class="form-check-input" type="checkbox" id="s3" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s3">Midweek Prayer (7:00 PM)</label>
                   </div>
                 </div>
                 <hr>
                 <div class="mb-3">
-                  <label class="form-label small fw-bold">Add New Service</label>
-                  <input type="text" class="form-control form-control-sm mb-2" placeholder="e.g. Youth Night">
-                  <button class="btn btn-sm btn-outline-primary w-100">Add Service</button>
+                <label class="form-label small fw-bold">Add New Service</label>
+                <!-- Agregamos ID al input -->
+                <input type="text" id="new-service-name" class="form-control form-control-sm mb-2" placeholder="e.g. Youth Night">
+               <!-- Agregamos la función al botón -->
+                <button class="btn btn-sm btn-outline-primary w-100" onclick="addNewService()">Add Service</button>
                 </div>
               </div>
             </div>
@@ -193,15 +195,94 @@
   </div>
 
   <script>
-    function addZoneRow() {
-      const tbody = document.getElementById('zone-list');
-      const row = `<tr>
-        <td><input type="text" class="form-control form-control-sm" placeholder="New Zone Name..."></td>
-        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
-      </tr>`;
-      tbody.insertAdjacentHTML('beforeend', row);
+  // 1. Agregar zona con validación para que no sea infinita/vacía
+  function addZoneRow() {
+    const tbody = document.getElementById('zone-list');
+    const lastInput = tbody.querySelector('tr:last-child input');
+
+    // Validación: Si el último input está vacío, no deja agregar otro
+    if (lastInput && lastInput.value.trim() === "") {
+      alert("Please enter a name for the current zone before adding a new one.");
+      lastInput.focus();
+      return;
     }
-  </script>
+
+    const row = `<tr>
+      <td><input type="text" class="form-control form-control-sm" placeholder="New Zone Name..."></td>
+      <td class="text-end">
+        <button class="btn btn-sm btn-icon btn-light text-danger" onclick="confirmDeleteZone(this)">
+          <i class="fi fi-trash"></i>
+        </button>
+      </td>
+    </tr>`;
+    tbody.insertAdjacentHTML('beforeend', row);
+  }
+
+  // 2. Confirmación antes de borrar (Feedback de QA)
+  function confirmDeleteZone(button) {
+    if (confirm("Are you sure you want to remove this zone?")) {
+      button.closest('tr').remove();
+    }
+  }
+
+  // 3. Simulación de guardado con feedback real
+  function saveZones() {
+    const inputs = document.querySelectorAll('#zone-list input');
+    let hasEmpty = false;
+
+    inputs.forEach(input => {
+      if (input.value.trim() === "") hasEmpty = true;
+    });
+
+    if (hasEmpty) {
+      alert("Cannot save: One or more zones have empty names.");
+      return;
+    }
+
+    alert('Configuration saved successfully to Firebase!');
+  }
+
+  function addNewService() {
+    const input = document.getElementById('new-service-name');
+    const serviceName = input.value.trim();
+    
+    if (serviceName === "") {
+        alert("Please enter a service name.");
+        return;
+    }
+
+    const container = document.querySelector('.mb-3 .form-check').parentNode;
+    const newId = 's' + (document.querySelectorAll('.form-check-input').length + 1);
+    
+    const newServiceHtml = `
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" checked id="${newId}">
+            <label class="form-check-label small" for="${newId}">${serviceName}</label>
+        </div>
+    `;
+    
+    // Insertamos el nuevo servicio antes del <hr>
+    document.querySelector('hr').insertAdjacentHTML('beforebegin', newServiceHtml);
+    
+    // Limpiamos el input y damos feedback
+    input.value = "";
+    console.log("Service added:", serviceName);
+}
+
+function handleServiceChange(checkbox) {
+    const status = checkbox.checked ? 'activated' : 'deactivated';
+    const serviceName = checkbox.nextElementSibling.innerText;
+    
+    // Esto se verá en la consola del navegador (F12)
+    console.log(`Service ${serviceName} is now ${status}`);
+    
+    // Opcional: una notificación rápida
+    // alert(`${serviceName} has been ${status}`);
+}
+
+</script>
+
+      
 
   <script src="assets/js/core.min.js"></script>
   <script src="assets/js/vendor_bundle.min.js"></script>

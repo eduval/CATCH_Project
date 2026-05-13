@@ -263,7 +263,8 @@
                 <div id="step3-content" class="step-pane d-none mx-auto" style="max-width: 600px;">
                 <h5 class="fw-bold mb-4 text-center">3. ML Head Detection</h5>
                 <div class="position-relative mb-4">
-                    <img src="assets/images/demo/church-crowd.jpg" class="img-fluid rounded shadow" alt="Detection Result">
+                    <!-- Busca esto en el STEP 3 y déjalo así: -->
+                    <img id="preview-img" src="assets/images/demo/church-crowd.jpg" class="img-fluid rounded shadow" alt="Detection Result">
                     <div class="position-absolute top-0 end-0 m-3 badge bg-success p-2">ML ACTIVE: 562 Heads Found</div>
                 </div>
                 <div class="alert alert-info py-2 small">Algorithm: YOLOv5 optimized for high-density counting[cite: 8].</div>
@@ -329,15 +330,21 @@
         }
 
         // 2. Lógica para el botón de subida manual (Step 2)
-        function handleManualUpload(input) {
-            if (input.files && input.files[0]) {
-                console.log("Archivo detectado:", input.files[0].name);
-                // Forzamos el salto al paso de detección (Step 3)
-                if (typeof goToStep === "function") {
-                    goToStep(3);
-                }
-            }
-        }
+       function handleFileUpload(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Esto cambia la imagen de ejemplo por la que acabas de subir
+            document.getElementById('preview-img').src = e.target.result;
+            
+            console.log("Imagen cargada con éxito");
+            goToStep(3); // Salta al paso de visualización
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
     </script>
 
   </body>
