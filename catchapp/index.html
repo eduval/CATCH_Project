@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <title>CATCH | Attendance Hub</title>
+    <meta name="description" content="Automated Service Attendance Tracking">
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <!-- Standard Asset Paths -->
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+
+    <style>
+      .badge-live { animation: blinker 1.5s linear infinite; }
+      @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+  </head>
+
+  <body class="layout-admin aside-sticky bg-light header-sticky">
+
+    <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+      <!-- HEADER -->
+      <header id="header" class="d-flex align-items-center shadow-xs">
+        <div class="container-fluid position-relative">
+          <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+            <div class="align-items-start">
+              <a href="#aside-main" class="btn-sidebar-toggle h-100 d-inline-block d-lg-none p-2">
+                <span><svg width="25" height="25" viewBox="0 0 20 20"><path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z"></path><path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z"></path><path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z"></path><path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z"></path></svg></span>
+              </a>
+              <a class="navbar-brand d-none d-lg-block mx-2" href="index.html">
+                <span class="h4 fw-bold text-primary">CATCH</span>
+              </a>
+            </div>
+
+            <ul class="list-inline list-unstyled mb-0 d-flex align-items-end">
+              <li class="list-inline-item mx-1 dropdown">
+                <a href="#" class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle" data-bs-toggle="dropdown"><i class="fi fi-bell"></i></a>
+              </li>
+              <li class="list-inline-item mx-1 dropdown">
+                <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)" data-bs-toggle="dropdown" aria-haspopup="true"></a>
+                <div aria-labelledby="dropdownAccountOptions" class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert p-0 mt-2 w-300">
+                  <div class="dropdown-header bg-primary text-white p-4 text-start">
+                    <span class="d-block fw-medium">Admin User</span>
+                    <span class="d-block smaller">admin@catch.hub</span>
+                  </div>
+                  <div class="dropdown-divider mb-3"></div>
+                  <a href="profile.html" class="dropdown-item"><i class="fi fi-user me-2"></i> My Profile</a>
+                  <div class="dropdown-divider mb-0 mt-3"></div>
+                  <a href="login.html" class="dropdown-footer fw-medium py-3 px-4"><i class="fi fi-power float-start"></i> Log Out</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <div id="wrapper_content" class="d-flex flex-fill">
+
+        <!-- SIDEBAR -->
+        <!-- UNIFIED CATCH SIDEBAR -->
+        <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
+  
+  <div class="py-4 px-3 mb-3 border-bottom text-center">
+    <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+    <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
+  </div>
+
+  <nav class="nav-deep nav-deep-sm nav-deep-light">
+    <ul class="nav flex-column">
+      
+      <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="active-counting.html">
+          <span>Active Counting</span>
+          <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="reports.html">
+          <span>Reports/Analytics</span>
+        </a>
+      </li>
+
+      <li class="nav-item border-bottom pb-3">
+        <a class="nav-link" href="records.html">
+          <span>Attendance Records</span>
+        </a>
+      </li>
+
+      <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="profile.html">
+          <span>My Profile</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">
+          <span>System Settings</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  /* Refined Text-Only Styling */
+  #aside-main .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem; /* Increased horizontal padding for a balanced look */
+    color: #495057;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+
+  /* Active and Hover States */
+  #aside-main .nav-item.active .nav-link,
+  #aside-main .nav-link:hover {
+    color: #007bff;
+    background-color: #f8f9fa;
+  }
+
+  /* Left accent line for the active page */
+  #aside-main .nav-item.active {
+    border-left: 4px solid #007bff;
+  }
+
+  #aside-main .nav-title {
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+</style>
+
+        <!-- MAIN CONTENT -->
+        <main id="middle" class="flex-fill p-4">
+          <header class="mb-4">
+            <h1 class="h4">Dashboard</h1>
+            <p class="text-muted small">Welcome back, Admin. Service tracking is active.</p>
+          </header>
+
+          <div class="row g-3 mb-4 text-start">
+            <div class="col-md-3">
+              <div class="bg-white shadow-xs rounded p-4 border-start border-primary border-3 h-100">
+                <div class="text-muted small fw-bold text-uppercase mb-2">Today's Attendance</div>
+                <div class="h2 fw-bold mb-0">1,248</div>
+                <span class="text-success small fw-bold">+8.5% <i class="fi fi-arrow-up"></i></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-white shadow-xs rounded p-4 border-start border-success border-3 h-100">
+                <div class="text-muted small fw-bold text-uppercase mb-2">Active Sessions</div>
+                <div class="h2 fw-bold mb-0 text-success">3</div>
+                <span class="text-muted small">Live counting</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-white shadow-xs rounded p-4 border-start border-info border-3 h-100">
+                <div class="text-muted small fw-bold text-uppercase mb-2">Total Services</div>
+                <div class="h2 fw-bold mb-0">52</div>
+                <span class="text-muted small">This month</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-white shadow-xs rounded p-4 border-start border-warning border-3 h-100">
+                <div class="text-muted small fw-bold text-uppercase mb-2">Avg. Attendance</div>
+                <div class="h2 fw-bold mb-0">1,102</div>
+                <span class="text-muted small">Last 30 days</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- LIVE OVERVIEW -->
+          <div class="card shadow-xs border-0 mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+              <h6 class="mb-0 fw-bold">Live Service Overview: Sunday Morning Service</h6>
+              <small class="text-muted">ID: SVC-2024-0519-01</small>
+            </div>
+            <div class="card-body py-5">
+              <div class="row text-center">
+                <div class="col-3 border-end">
+                  <div class="text-muted small mb-1 text-uppercase fw-bold">Main Hall</div>
+                  <div class="h3 fw-bold text-primary mb-0">562</div>
+                  <small class="text-primary smaller">Counting...</small>
+                </div>
+                <div class="col-3 border-end">
+                  <div class="text-muted small mb-1 text-uppercase fw-bold">Left Wing</div>
+                  <div class="h3 fw-bold text-primary mb-0">318</div>
+                  <small class="text-primary smaller">Counting...</small>
+                </div>
+                <div class="col-3 border-end">
+                  <div class="text-muted small mb-1 text-uppercase fw-bold">Right Wing</div>
+                  <div class="h3 fw-bold text-warning mb-0">245</div>
+                  <small class="text-warning smaller">Reviewing...</small>
+                </div>
+                <div class="col-3">
+                  <div class="text-muted small mb-1 text-uppercase fw-bold">Balcony</div>
+                  <div class="h3 fw-bold text-primary mb-0">123</div>
+                  <small class="text-primary smaller">Counting...</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANALYTICS PREVIEW -->
+          <div class="card shadow-xs border-0 mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+              <h6 class="mb-0 fw-bold">Attendance Trends</h6>
+            </div>
+            <div class="card-body">
+              <canvas class="chartjs" style="height:350px" 
+                data-chartjs-type="line" 
+                data-chartjs-labels='["Apr 21", "Apr 28", "May 5", "May 12", "May 19"]' 
+                data-chartjs-datasets='[{"label": "Total Attendance", "data": [750, 820, 780, 950, 1248], "borderColor": "#007bff", "backgroundColor": "rgba(0,123,255,0.05)", "fill": true, "borderWidth": 3}]'></canvas>
+            </div>
+          </div>
+
+        </main>
+      </div>
+
+      <!-- FOOTER -->
+      <footer id="footer" class="bg-white border-top p-3 text-center small text-muted">
+        <div class="container-fluid">
+            <span>&copy; 2026 CATCH | Attendance Tracking & Counting Hub</span>
+            <span class="mx-3 opacity-25">|</span>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+  </body>
+</html>
