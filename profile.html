@@ -194,60 +194,135 @@
 
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
 
     <script>
-      function toggleEdit(isEditing) {
-        document.getElementById('profile-view-mode').classList.toggle('d-none', isEditing);
-        document.getElementById('profile-edit-mode').classList.toggle('d-none', !isEditing);
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+      apiKey: "AIzaSyBviEaIKKwNPXnxQcHlq3y-Zzs8bY-SqaU",
+      authDomain: "cctb-catch-testing.firebaseapp.com",
+      databaseURL:"https://cctb-catch-testing-default-rtdb.firebaseio.com/",
+      projectId: "cctb-catch-testing",
+      storageBucket: "cctb-catch-testing.firebasestorage.app",
+      messagingSenderId: "734153648345",
+      appId: "1:734153648345:web:7692ec17fc87adc463b6c8",
+      measurementId: "G-PSTJ6T7LC7"
+    };
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Referencia a la base de datos (Realtime Database por ejemplo)
+    const database = firebase.database();
+    const userId = "admin"; // Identificador temporal para el usuario administrador del sistema
+
+// --- TUS FUNCIONES OPTIMIZADAS CON INTERFACES DE FIREBASE ---
+
+function toggleEdit(isEditing) {
+  document.getElementById('profile-view-mode').classList.toggle('d-none', isEditing);
+  document.getElementById('profile-edit-mode').classList.toggle('d-none', !isEditing);
+}
+
+function updateProfilePhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('profile-avatar').src = e.target.result;
+      document.getElementById('dropdownAccountOptions').style.backgroundImage = `url(${e.target.result})`;
+      
+      // OPTIONAL/FUTURE: Aquí se podría subir el string base64 o usar Firebase Storage
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// NUEVA: Carga los datos guardados en Firebase apenas se abre la página
+function loadProfile() {
+  database.ref('users/' + userId).once('value')
+    .then((snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Actualizar textos del modo vista estática
+        document.getElementById('display-name').innerText = data.name || 'Admin User';
+        document.getElementById('display-email').innerText = data.email || 'admin@catch.hub';
+        document.getElementById('display-role').innerText = data.role || 'Administrator';
+        document.getElementById('side-name').innerText = data.name || 'Admin User';
+
+        // Rellenar los inputs del formulario de edición preliminarmente
+        document.getElementById('input-name').value = data.name || '';
+        document.getElementById('input-email').value = data.email || '';
+        document.getElementById('input-role').value = data.role || '';
       }
+    })
+    .catch((error) => {
+      console.error("Error leyendo datos de Firebase:", error);
+    });
+}
 
-      function updateProfilePhoto(input) {
-        if (input.files && input.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            document.getElementById('profile-avatar').src = e.target.result;
-            document.getElementById('dropdownAccountOptions').style.backgroundImage = `url(${e.target.result})`;
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
+// MODIFICADA: Ahora valida localmente y escribe en Firebase
+
+
+    let currentPasswordInSystem = "123456"; 
+
+  function saveProfile(event) {
+  event.preventDefault(); // 1. Detiene la recarga
+  
+  // 2. ¡REVISA QUE ESTAS TRES LÍNEAS EXISTAN! (Aquí se definen)
+  const newName = document.getElementById('input-name').value;
+  const newEmail = document.getElementById('input-email').value;
+  const newRole = document.getElementById('input-role').value;
+
+  //Validacion de contras
+  const currentPass = document.getElementById('current-password').value;
+  const newPass = document.getElementById('new-password').value;
+  const confirmPass = document.getElementById('confirm-password').value;
+
+  if (newPass !== "" || confirmPass !== "") {
+      if (currentPass === "") {
+          alert("Error: You must enter your current password to set a new one.");
+          return;
       }
-
-      function saveProfile(event) {
-        event.preventDefault();
-        
-        const newName = document.getElementById('input-name').value;
-        const newEmail = document.getElementById('input-email').value;
-        const newRole = document.getElementById('input-role').value;
-
-        const currentPass = document.getElementById('current-password').value;
-        const newPass = document.getElementById('new-password').value;
-        const confirmPass = document.getElementById('confirm-password').value;
-
-        if (newPass !== "" || confirmPass !== "") {
-            if (currentPass === "") {
-                alert("Error: You must enter your current password to set a new one.");
-                return;
-            }
-            if (newPass !== confirmPass) {
-                alert("Error: New passwords do not match!");
-                return;
-            }
-            if (newPass.length < 6) {
-                alert("Error: New password must be at least 6 characters long.");
-                return;
-            }
-        }
-
-        document.getElementById('display-name').innerText = newName;
-        document.getElementById('display-email').innerText = newEmail;
-        document.getElementById('display-role').innerText = newRole;
-        document.getElementById('side-name').innerText = newName;
-
-        toggleEdit(false);
-        alert('Profile updated successfully!');
+      if (newPass !== confirmPass) {
+          alert("Error: New passwords do not match!");
+          return;
       }
+      if (newPass.length < 6) {
+          alert("Error: New password must be at least 6 characters long.");
+          return;
+      }
+  }
+
+  // Objeto con la información estructurada para el nodo de Firebase
+  const updatedProfileData = {
+    name: newName,
+    email: newEmail,
+    role: newRole
+  };
+
+  // Guardar en la base de datos distribuida de Firebase en tiempo real
+  database.ref('users/' + userId).update(updatedProfileData)
+    .then(() => {
+      // Si la escritura es exitosa, refrescamos la UI estática en el cliente
+      document.getElementById('display-name').innerText = newName;
+      document.getElementById('display-email').innerText = newEmail;
+      document.getElementById('display-role').innerText = newRole;
+      document.getElementById('side-name').innerText = newName;
+
+      toggleEdit(false);
+      alert('Profile updated successfully in Firebase!');
+    })
+    .catch((error) => {
+      alert('Error saving data to Firebase. Check console.');
+      console.error("Firebase update failed: ", error);
+    });
+}
+
+// Listener para disparar la carga automática al renderizar el DOM
+document.addEventListener('DOMContentLoaded', loadProfile);
     </script>
   </body>
 </html>
