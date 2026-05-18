@@ -25,7 +25,7 @@
               
               <h4 class="fw-bold mb-4 text-start">Sign In</h4>
 
-              <form action="index.html" method="POST">
+              <form onsubmit="handleLogin(event)">
                 <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
                   <label for="email">Email address</label>
@@ -59,6 +59,27 @@
 
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
+
+    <script>
+      function handleLogin(event) {
+        // 1. Evitamos que la página se recargue automáticamente
+        event.preventDefault();
+
+        // 2. Capturamos los datos que escribió el usuario (por si los necesitas después)
+        const emailInput = document.getElementById('email').value;
+        const passwordInput = document.getElementById('password').value;
+
+        // Opcional: Aquí podrías poner una validación fija si quieres, por ejemplo:
+        // if (passwordInput.length < 6) { alert("Short password"); return; }
+
+        // 3. Creamos de forma exitosa la sesión en el almacenamiento local del navegador
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', emailInput); // Guarda el correo para usarlo en el perfil si quieres
+
+        // 4. Redirigimos manualmente al index ahora que ya tiene el permiso guardado
+        window.location.href = 'index.html';
+      }
+    </script>
 
   </body>
 </html>

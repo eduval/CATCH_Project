@@ -15,6 +15,16 @@
       .badge-live { animation: blinker 1.5s linear infinite; }
       @keyframes blinker { 50% { opacity: 0; } }
     </style>
+
+    <script>
+  // Verificar si existe la bandera de que el usuario ya inició sesión
+  const userIsLoggedIn = localStorage.getItem('isLoggedIn');
+
+  // Si no existe, lo mandamos directo al login inmediatamente
+  if (!userIsLoggedIn || userIsLoggedIn !== 'true') {
+    window.location.href = 'login.html'; 
+  }
+  </script>
   </head>
 
   <body class="layout-admin aside-sticky bg-light header-sticky">
