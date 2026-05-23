@@ -9,21 +9,43 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
   
   <style>
-    /* Minimalist Sidebar */
-    #aside-main .nav-link { display: flex; align-items: center; padding: 0.8rem 1.5rem; color: #495057; font-weight: 500; transition: all 0.2s ease-in-out; text-decoration: none; }
-    #aside-main .nav-item.active .nav-link, #aside-main .nav-link:hover { color: #007bff; background-color: #f8f9fa; }
-    #aside-main .nav-item.active { border-left: 4px solid #007bff; }
-    #aside-main .nav-title { letter-spacing: 0.5px; opacity: 0.8; }
+    /* Refined Text-Only Styling */
+    #aside-main .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.5rem; 
+      color: #495057;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+      text-decoration: none;
+    }
 
-    /* Zone Styling */
+    /* Active and Hover States */
+    #aside-main .nav-item.active .nav-link,
+    #aside-main .nav-link:hover {
+      color: #007bff;
+      background-color: #f8f9fa;
+    }
+
+    /* Left accent line for the active page */
+    #aside-main .nav-item.active {
+      border-left: 4px solid #007bff;
+    }
+
+    #aside-main .nav-title {
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+    }
+
+    /* Card UI Custom Styling Elements */
     .zone-card { border: 2px solid #e9ecef; border-radius: 12px; transition: 0.2s; background: #fff; min-height: 320px; position: relative; }
     .zone-card.validated { border-color: #28a745; background-color: #f8fff9; }
     .zone-card.has-selection { border-color: #007bff; background-color: #f0f7ff; }
+    .zone-card.rejected { border-color: #dc3545; background-color: #fff5f5; }
     
     .img-preview { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 15px; border: 1px solid #dee2e6; }
     .status-badge { font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
     
-    /* Submission Gallery */
     .submission-item { cursor: pointer; border: 2px solid transparent; transition: 0.2s; border-radius: 8px; overflow: hidden; position: relative; }
     .submission-item:hover { border-color: #007bff; }
     .submission-item.selected { border-color: #007bff; box-shadow: 0 0 10px rgba(0,123,255,0.3); }
@@ -41,7 +63,7 @@
         <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
           <a class="navbar-brand mx-2" href="index.html"><span class="h4 fw-bold text-primary">CATCH</span></a>
           <div id="session-indicator-ui" class="d-none">
-            <span class="badge bg-success-soft text-success px-3 py-2">● LIVE SESSION</span>
+            <span class="badge bg-success-soft text-success px-3 py-2">● LIVE SESSION RUNNING</span>
           </div>
         </nav>
       </div>
@@ -50,89 +72,38 @@
     <div id="wrapper_content" class="d-flex flex-fill">
 
       <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
-  
-  <div class="py-4 px-3 mb-3 border-bottom text-center">
-    <h4 class="fw-bold text-primary mb-0">CATCH</h4>
-    <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
-  </div>
-
-  <nav class="nav-deep nav-deep-sm nav-deep-light">
-    <ul class="nav flex-column">
-      
-      <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <span>Dashboard</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="active-counting.html">
-          <span>Active Counting</span>
-          <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="reports.html">
-          <span>Reports/Analytics</span>
-        </a>
-      </li>
-
-      <li class="nav-item border-bottom pb-3">
-        <a class="nav-link" href="records.html">
-          <span>Attendance Records</span>
-        </a>
-      </li>
-
-      <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="profile.html">
-          <span>My Profile</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="settings.html">
-          <span>System Settings</span>
-        </a>
-      </li>
-
-    </ul>
-  </nav>
-</aside>
-
-<style>
-  /* Refined Text-Only Styling */
-  #aside-main .nav-link {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem 1.5rem; 
-    color: #495057;
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
-  }
-
-  /* Active and Hover States */
-  #aside-main .nav-item.active .nav-link,
-  #aside-main .nav-link:hover {
-    color: #007bff;
-    background-color: #f8f9fa;
-  }
-
-  /* Left accent line for the active page */
-  #aside-main .nav-item.active {
-    border-left: 4px solid #007bff;
-  }
-
-  #aside-main .nav-title {
-    letter-spacing: 0.5px;
-    opacity: 0.8;
-  }
-</style>
+        <div class="py-4 px-3 mb-3 border-bottom text-center">
+          <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+          <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
+        </div>
+        <nav class="nav-deep nav-deep-sm nav-deep-light">
+          <ul class="nav flex-column">
+            <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link d-flex align-items-center" href="active-counting.html">
+                <span>Active Counting</span>
+                <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="reports.html"><span>Reports/Analytics</span></a>
+            </li>
+            <li class="nav-item border-bottom pb-3">
+              <a class="nav-link" href="records.html"><span>Attendance Records</span></a>
+            </li>
+            <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile.html"><span>My Profile</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="settings.html"><span>System Settings</span></a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
       <main id="middle" class="flex-fill p-4">
         
@@ -175,6 +146,7 @@
                     <p class="text-muted small mb-0" id="display-date"></p>
                 </div>
                 <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm px-3" id="cancel-session-btn" onclick="cancelSession()">Cancel Session</button>
                     <button id="toggle-session-btn" class="btn btn-success btn-sm px-4 fw-bold" onclick="toggleSession()">Start Session</button>
                     <button class="btn btn-danger btn-sm px-4 fw-bold d-none" id="save-session-btn" onclick="saveToSystem()">Save All Records</button>
                 </div>
@@ -195,12 +167,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body py-4">
-            <p class="text-muted small mb-4">Select the best image from the operator submissions to proceed with AI counting.</p>
-            <div class="row g-3" id="submission-list">
-                </div>
+            <p class="text-muted small mb-4">Select an image to approve for counting, or notify operators to retake the photo if none meet standards.</p>
+            <div class="row g-3" id="submission-list"></div>
         </div>
-        <div class="modal-footer border-top-0">
-            <button class="btn btn-primary w-100 py-3 fw-bold" id="confirm-selection-btn" disabled onclick="confirmSelection()">Use Selected Image & Count</button>
+        <div class="modal-footer border-top-0 d-flex gap-2">
+            <button class="btn btn-outline-danger py-3 px-4 fw-bold" onclick="rejectSubmissionsNotify()">Reject & Notify Operator</button>
+            <button class="btn btn-primary flex-grow-1 py-3 fw-bold" id="confirm-selection-btn" disabled onclick="confirmSelection()">Use Selected Image & Count</button>
         </div>
       </div>
     </div>
@@ -215,12 +187,47 @@
     let activeZoneId = null;
     let tempSelectedPhoto = null;
 
-    // Simulation Data (Staff Submissions)
     const mockSubmissions = [
         { id: 101, staff: 'Operator-A', time: '09:45 AM', url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400' },
-        { id: 102, staff: 'Staff-04', time: '09:47 AM', url: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400' },
-        { id: 103, staff: 'Operator-A', time: '09:55 AM', url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400' }
+        { id: 102, staff: 'Staff-04', time: '09:47 AM', url: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400' }
     ];
+
+    // PERSISTENCE ENGINE: Save State
+    function saveActiveState() {
+        const payload = {
+            isSessionLive: isSessionLive,
+            zones: zones,
+            name: document.getElementById('display-name').innerText,
+            date: document.getElementById('display-date').innerText,
+            isInitialized: !document.getElementById('step-manage').classList.contains('d-none')
+        };
+        localStorage.setItem('catch_active_session_running', JSON.stringify(payload));
+    }
+
+    // PERSISTENCE ENGINE: Load State
+    function loadActiveState() {
+        const saved = localStorage.getItem('catch_active_session_running');
+        if (!saved) return;
+
+        const data = JSON.parse(saved);
+        if (data.isInitialized) {
+            zones = data.zones;
+            isSessionLive = data.isSessionLive;
+
+            document.getElementById('display-name').innerText = data.name;
+            document.getElementById('display-date').innerText = data.date;
+            
+            document.getElementById('step-setup').classList.add('d-none');
+            document.getElementById('step-manage').classList.remove('d-none');
+
+            const btn = document.getElementById('toggle-session-btn');
+            btn.innerText = isSessionLive ? "Stop Session" : "Start Session";
+            btn.className = isSessionLive ? "btn btn-outline-danger btn-sm px-4 fw-bold" : "btn btn-success btn-sm px-4 fw-bold";
+            document.getElementById('session-indicator-ui').className = isSessionLive ? 'd-block' : 'd-none';
+
+            renderZones();
+        }
+    }
 
     function addZoneInput() {
         const html = `<div class="input-group mb-2 zone-input-row"><input type="text" class="form-control" placeholder="Zone Name..."><button class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button></div>`;
@@ -234,13 +241,15 @@
 
         zones = [];
         document.querySelectorAll('.zone-input-row input').forEach((inp, i) => {
-            if(inp.value) zones.push({ id: i, name: inp.value, selectedPhoto: null, count: 0, validated: false, hasSubmissions: true });
+            if(inp.value) zones.push({ id: i, name: inp.value, selectedPhoto: null, count: 0, validated: false, statusText: 'WAITING' });
         });
 
         document.getElementById('display-name').innerText = name;
         document.getElementById('display-date').innerText = "Event Date: " + date;
         document.getElementById('step-setup').classList.add('d-none');
         document.getElementById('step-manage').classList.remove('d-none');
+        
+        saveActiveState();
         renderZones();
     }
 
@@ -250,7 +259,17 @@
         btn.innerText = isSessionLive ? "Stop Session" : "Start Session";
         btn.className = isSessionLive ? "btn btn-outline-danger btn-sm px-4 fw-bold" : "btn btn-success btn-sm px-4 fw-bold";
         document.getElementById('session-indicator-ui').className = isSessionLive ? 'd-block' : 'd-none';
+        
+        saveActiveState();
         renderZones();
+    }
+
+    // CANCEL SESSION & START OVER LOGIC
+    function cancelSession() {
+        if (confirm("Are you sure you want to completely cancel this active session? All current selections will be discarded.")) {
+            localStorage.removeItem('catch_active_session_running');
+            location.reload();
+        }
     }
 
     function renderZones() {
@@ -259,28 +278,38 @@
         zones.forEach(z => {
             const card = document.createElement('div');
             card.className = 'col-md-4';
-            const status = z.validated ? 'validated' : (z.selectedPhoto ? 'has-selection' : '');
             
+            let statusClass = '';
+            let badgeClass = 'bg-secondary text-white';
+            if (z.validated) {
+                statusClass = 'validated';
+                badgeClass = 'bg-success text-white';
+            } else if (z.statusText === 'REJECTED') {
+                statusClass = 'rejected';
+                badgeClass = 'bg-danger text-white';
+            } else if (z.selectedPhoto) {
+                statusClass = 'has-selection';
+                badgeClass = 'bg-primary text-white';
+            }
+
             card.innerHTML = `
-                <div class="zone-card p-4 d-flex flex-column ${status} ${!isSessionLive ? 'opacity-50' : ''}">
+                <div class="zone-card p-4 d-flex flex-column ${statusClass} ${!isSessionLive ? 'opacity-50' : ''}">
                     <div class="d-flex justify-content-between mb-3">
                         <h6 class="fw-bold mb-0">${z.name}</h6>
-                        <span class="status-badge ${z.validated ? 'bg-success text-white' : (z.selectedPhoto ? 'bg-primary text-white' : 'bg-secondary text-white')}">
-                            ${z.validated ? 'SAVED' : (z.selectedPhoto ? 'SELECTED' : 'WAITING')}
-                        </span>
+                        <span class="status-badge ${badgeClass}">${z.statusText}</span>
                     </div>
 
                     ${z.selectedPhoto ? 
                         `<img src="${z.selectedPhoto}" class="img-preview">` : 
-                        `<div class="bg-light rounded flex-grow-1 d-flex align-items-center justify-content-center text-muted mb-3 small border-dashed">
-                            <span>No Image Selected</span>
+                        `<div class="bg-light rounded flex-grow-1 d-flex align-items-center justify-content-center text-muted mb-3 small border-dashed text-center px-3">
+                            <span>${z.statusText === 'REJECTED' ? '⚠️ Photo Rejected.<br>Waiting for Operator Resubmission...' : 'No Image Selected'}</span>
                         </div>`
                     }
 
                     <div class="mt-auto">
                         ${!z.validated ? `
-                            <button class="btn btn-sm btn-outline-primary w-100" onclick="openGallery(${z.id})" ${!isSessionLive ? 'disabled' : ''}>
-                                ${z.selectedPhoto ? 'Change Selected Photo' : 'Review Staff Submissions'}
+                            <button class="btn btn-sm ${z.statusText === 'REJECTED' ? 'btn-danger' : 'btn-outline-primary'} w-100" onclick="openGallery(${z.id})" ${!isSessionLive ? 'disabled' : ''}>
+                                ${z.statusText === 'REJECTED' ? 'Review Resubmissions' : (z.selectedPhoto ? 'Change Selected Photo' : 'Review Staff Submissions')}
                             </button>
                         ` : `
                             <div class="text-center py-2 bg-white rounded border">
@@ -333,14 +362,28 @@
     function confirmSelection() {
         const z = zones.find(x => x.id === activeZoneId);
         z.selectedPhoto = tempSelectedPhoto;
+        z.statusText = 'SELECTED';
         
-        // Automatic simulate counting for the demo
         setTimeout(() => {
             z.validated = true;
+            z.statusText = 'SAVED';
             z.count = Math.floor(Math.random() * 150) + 300;
             bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
+            saveActiveState();
             renderZones();
         }, 800);
+    }
+
+    function rejectSubmissionsNotify() {
+        const z = zones.find(x => x.id === activeZoneId);
+        z.selectedPhoto = null;
+        z.validated = false;
+        z.statusText = 'REJECTED';
+        
+        alert(`Notification dispatched to operators: Please upload a clearer image for "${z.name}".`);
+        bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
+        saveActiveState();
+        renderZones();
     }
 
     function resetZone(id) {
@@ -348,6 +391,8 @@
             const z = zones.find(x => x.id === id);
             z.validated = false;
             z.selectedPhoto = null;
+            z.statusText = 'WAITING';
+            saveActiveState();
             renderZones();
         }
     }
@@ -359,9 +404,32 @@
     }
 
     function saveToSystem() {
-        alert("Success: All verified zone data has been transmitted to Firebase.");
+        let recordHistory = localStorage.getItem('catch_saved_event_history');
+        recordHistory = recordHistory ? JSON.parse(recordHistory) : [];
+
+        let totalAttendance = 0;
+        let formattedZones = [];
+        zones.forEach(z => {
+            totalAttendance += z.count;
+            formattedZones.push({ name: z.name, count: z.count });
+        });
+
+        const historicalRecordElement = {
+            name: document.getElementById('display-name').innerText,
+            date: document.getElementById('display-date').innerText.replace("Event Date: ", ""),
+            total: totalAttendance,
+            breakdown: formattedZones
+        };
+
+        recordHistory.unshift(historicalRecordElement);
+        localStorage.setItem('catch_saved_event_history', JSON.stringify(recordHistory));
+
+        localStorage.removeItem('catch_active_session_running');
+        alert("Success: Session records committed to the archive.");
         location.reload();
     }
+
+    window.onload = loadActiveState;
   </script>
 </body>
 </html>
