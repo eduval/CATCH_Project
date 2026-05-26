@@ -12,6 +12,18 @@
 
   <body class="layout-admin aside-sticky bg-light header-sticky">
 
+    <script>
+  // El guardián del Administrador
+  const role = localStorage.getItem('userRole');
+  const loggedIn = localStorage.getItem('isLoggedIn');
+
+  // Si no ha iniciado sesión, o si es un operador metiche, lo botamos
+  if (loggedIn !== 'true' || role !== 'admin') {
+    alert("Access Denied: You do not have administrator privileges.");
+    window.location.href = 'login.html'; 
+  }
+</script>
+
     <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
       <header id="header" class="d-flex align-items-center shadow-xs bg-white">

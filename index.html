@@ -17,6 +17,16 @@
     </style>
 
     <script>
+     // El guardián del Administrador
+  const role = localStorage.getItem('userRole');
+  const loggedIn = localStorage.getItem('isLoggedIn');
+
+  // Si no ha iniciado sesión, o si es un operador metiche, lo botamos
+  if (loggedIn !== 'true' || role !== 'admin') {
+    alert("Access Denied: You do not have administrator privileges.");
+    window.location.href = 'login.html'; 
+  }
+
   // Verificar si existe la bandera de que el usuario ya inició sesión
   const userIsLoggedIn = localStorage.getItem('isLoggedIn');
 

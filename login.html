@@ -59,27 +59,73 @@
 
     <script src="assets/js/core.min.js"></script>
     <script src="assets/js/vendor_bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-    <script>
-      function handleLogin(event) {
-        // 1. Evitamos que la página se recargue automáticamente
-        event.preventDefault();
+<script>
+  // 1. Configuración corregida (Asegúrate de que databaseURL termine en la raíz .com/)
+  const firebaseConfig = {
+  apiKey: "AIzaSyBviEaIKKwNPXnxQcHlq3y-Zzs8bY-SqaU",
+  authDomain: "cctb-catch-testing.firebaseapp.com",
+  databaseURL: "https://cctb-catch-testing-default-rtdb.firebaseio.com",
+  projectId: "cctb-catch-testing",
+  storageBucket: "cctb-catch-testing.firebasestorage.app",
+  messagingSenderId: "734153648345",
+  appId: "1:734153648345:web:7692ec17fc87adc463b6c8",
+  measurementId: "G-PSTJ6T7LC7"
+};
 
-        // 2. Capturamos los datos que escribió el usuario (por si los necesitas después)
-        const emailInput = document.getElementById('email').value;
-        const passwordInput = document.getElementById('password').value;
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const database = firebase.database();
 
-        // Opcional: Aquí podrías poner una validación fija si quieres, por ejemplo:
-        // if (passwordInput.length < 6) { alert("Short password"); return; }
+  // 2. Función de Login controlada por Firebase Auth
+  function handleLogin(event) {
+    event.preventDefault();
 
-        // 3. Creamos de forma exitosa la sesión en el almacenamiento local del navegador
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userEmail', emailInput); // Guarda el correo para usarlo en el perfil si quieres
+    const emailInput = document.getElementById('email').value.trim();
+    const passwordInput = document.getElementById('password').value;
 
-        // 4. Redirigimos manualmente al index ahora que ya tiene el permiso guardado
-        window.location.href = 'index.html';
-      }
-    </script>
+    // Iniciar sesión con el servicio de Autenticación
+    auth.signInWithEmailAndPassword(emailInput, passwordInput)
+      .then((userCredential) => {
+        // Si el correo y la clave son correctos, extraemos el prefijo antes del '@'
+        // 'admin@catch.hub' -> 'admin'  ||  'operator@catch.hub' -> 'operator'
+        const userKey = emailInput.split('@')[0];
 
+        // Buscamos ese nodo exacto en Realtime Database para validar su Rol
+        return database.ref('users/' + userKey).once('value');
+      })
+      .then((snapshot) => {
+        const userData = snapshot.val();
+
+        if (userData && userData.role) {
+          // Guardamos las banderas de sesión en el navegador
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userRole', userData.role.toLowerCase());
+          localStorage.setItem('userEmail', emailInput);
+
+          // Evaluamos el rol para decidir a dónde enviarlo
+          if (userData.role.toLowerCase() === 'admin') {
+            alert("Welcome back, Administrator!");
+            window.location.href = 'index.html';
+          } else if (userData.role.toLowerCase() === 'operator') {
+            alert("Welcome back, Operator!");
+            window.location.href = 'operator.html'; // Te dará 404 hasta que crees la página del operador
+          } else {
+            alert("Access granted, but role is undefined.");
+          }
+        } else {
+          alert("Error: User configuration not found in Realtime Database.");
+        }
+      })
+      .catch((error) => {
+        console.error("Login Error:", error);
+        alert("Authentication failed: " + error.message);
+      });
+  }
+</script>
   </body>
 </html>

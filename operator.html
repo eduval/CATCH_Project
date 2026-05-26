@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <title>CATCH | Active Counting</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=5, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/core.min.css">
+    <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+  </head>
+
+<body class="bg-light min-vh-100 header-sticky" data-s2t-class="btn-primary btn-sm bg-gradient-default rounded-circle border-0">
+
+  <div id="wrapper" class="d-flex align-items-stretch flex-column">
+
+    <header id="header" class="d-flex align-items-center shadow-xs bg-white">
+      <div class="container-fluid position-relative px-4"> <nav class="navbar navbar-expand-lg navbar-light justify-content-between w-100 p-0">
+          
+          <div class="align-items-start">
+            <a class="navbar-brand mx-0" href="#">
+              <span class="h3 fw-bold text-primary">CATCH</span>
+            </a>
+          </div>
+
+          <ul class="list-inline list-unstyled mb-0 d-flex align-items-center">
+            <li class="list-inline-item mx-1 dropdown">
+              <a href="#" class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle" data-bs-toggle="dropdown"><i class="fi fi-bell"></i></a>
+            </li>
+            <li class="list-inline-item mx-1 dropdown">
+              <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)" data-bs-toggle="dropdown" aria-haspopup="true"></a>
+              <div aria-labelledby="dropdownAccountOptions" class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert p-0 mt-2 w-300">
+                <div class="dropdown-header bg-primary text-white p-4 text-start">
+                  <span class="d-block fw-medium">Operator User</span>
+                  <span class="d-block smaller">operator@catch.hub</span>
+                </div>
+                <div class="dropdown-divider mb-0"></div>
+                <a href="#" onclick="handleLogout()" class="dropdown-footer fw-medium py-3 px-4 text-danger"><i class="fi fi-power float-start me-2"></i> Log Out</a>
+              </div>
+            </li>
+          </ul>
+
+        </nav>
+      </div>
+    </header>
+
+    <div class="flex-fill w-100">
+      
+      <div class="container py-5">
+      <div class="row justify-content-center">
+    
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function handleLogout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+  </script>
+
+         <div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h4 fw-bold text-dark m-0">Services List</h1>
+        <button class="btn btn-primary btn-sm fw-bold rounded-lg">Upload</button>
+      </div>
+
+      <div class="card shadow-sm border-0 rounded-xl bg-white p-4">
+        <div class="table-responsive">
+          <table class="table table-align-middle table-edge-links mb-0">
+            
+            <thead>
+              <tr class="text-muted small text-uppercase data-header">
+                <th class="w--50"></th> <th>Service</th>
+                <th>Date</th>
+                <th>Zones</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              
+              <tr>
+                <td>
+                  <input class="form-check-input" type="checkbox">
+                </td>
+                <td>
+                  <span class="fw-bold text-dark d-block">AI Camera Detection</span>
+                  <span class="text-muted smaller">ID: CATCH-001</span>
+                </td>
+                <td>
+                  <span class="text-secondary">May 25, 2026</span>
+                  <span class="text-muted smaller d-block">14:30 PM</span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-secondary border px-2 py-1">Main Entrance</span>
+                </td>
+                <td>
+                  <span class="badge bg-success-soft text-success fw-bold">Active</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <input class="form-check-input" type="checkbox">
+                </td>
+                <td>
+                  <span class="fw-bold text-dark d-block">Crowd Counting Event</span>
+                  <span class="text-muted smaller">ID: CATCH-002</span>
+                </td>
+                <td>
+                  <span class="text-secondary">May 26, 2026</span>
+                  <span class="text-muted smaller d-block">09:00 AM</span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-secondary border px-2 py-1">North Pavilion</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning-soft text-warning fw-bold">Pending</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <input class="form-check-input" type="checkbox">
+                </td>
+                <td>
+                  <span class="fw-bold text-dark d-block">Perimeter Security Surveillance</span>
+                  <span class="text-muted smaller">ID: CATCH-003</span>
+                </td>
+                <td>
+                  <span class="text-secondary">May 24, 2026</span>
+                  <span class="text-muted smaller d-block">22:15 PM</span>
+                </td>
+                <td>
+                  <span class="badge bg-light text-secondary border px-2 py-1">South Gate</span>
+                </td>
+                <td>
+                  <span class="badge bg-danger-soft text-danger fw-bold">Inactive</span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </main>
+        <!-- /main -->
+
+      </div>
+      <!-- /content -->
+
+
+      <!-- footer -->
+      <footer id="footer" class="bg-white shadow"></footer>
+      <!-- /footer -->
+
+
+    </div><!-- /#wrapper -->
+
+    <!-- Core javascripts -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/vendor_bundle.min.js"></script>
+
+  </body>
+</html>
