@@ -320,67 +320,61 @@
         });
     }
 
-    // 🚀 INTEGRACIÓN COMPLETA DE TU API CON TU LÓGICA DE FILTRADO DE CONFIANZA
-    function approveAndCount() {
-        const targetZone = currentZonesData[activeZoneKey];
-        const base64Photo = targetZone.photoUrl; // Extraemos el archivo que subió el operador
+function approveAndCount() {
+    const targetZone = currentZonesData[activeZoneKey];
+    const base64Photo = targetZone.photoUrl; // La foto real del operador
+    
+    const btn = document.getElementById('ai-trigger-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Analyzing image objects via CATCH AI...`;
+
+    // Hace la petición POST real hacia tu servidor de Node.js
+    fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ image: base64Photo }) // Le manda la foto de la zona
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("API HTTP Error status: " + response.status);
+        return response.json();
+    })
+    .then(aiResponse => {
+        // ==============================================
+        // 🎯 TU LÓGICA DE FILTRADO EXACTA (No se toca)
+        // ==============================================
+        const CONFIDENCE_THRESHOLD = 0.5;
+        const TARGET_CLASS = "person";
+        const results = aiResponse?.images?.[0]?.results || [];
         
-        const btn = document.getElementById('ai-trigger-btn');
-        btn.disabled = true;
-        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Analyzing image objects...`;
+        let attendance = 0;
 
-        // NOTA: Reemplaza "http://localhost:5000/predict" por la URL de tu endpoint real de Flask/Node
-        fetch("http://localhost:5000/predict", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ image: base64Photo })
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("API HTTP Error status: " + response.status);
-            return response.json();
-        })
-        .then(aiResponse => {
-            // ==============================================
-            // 🎯 INYECCIÓN DE TU SCRIPT DE ANÁLISIS DE OBJETOS
-            // ==============================================
-            const CONFIDENCE_THRESHOLD = 0.5;
-            const TARGET_CLASS = "person";
-            const results = aiResponse?.images?.[0]?.results || [];
-            
-            let attendance = 0;
-
-            results.forEach((obj) => {
-                const { name, confidence } = obj;
-                
-                // Ignorar objetos por debajo del umbral de certeza (como el de 0.48006)
-                if (confidence < CONFIDENCE_THRESHOLD) return;
-
-                // Sumar al contador oficial únicamente si es una persona
-                if (name === TARGET_CLASS) {
-                    attendance++;
-                }
-            });
-            // ==============================================
-
-            // Subimos a Firebase el conteo exacto filtrado por ti
-            return database.ref(`events/${currentEventId}/zones/${activeZoneKey}`).update({
-                status: "terminado",
-                count: attendance, 
-                feedback: "Accepted & Processed via CATCH AI Engine"
-            });
-        })
-        .then(() => {
-            bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
-        })
-        .catch(err => {
-            alert("AI Server Communication Error: " + err.message);
-            btn.disabled = false;
-            btn.innerHTML = `✅ Accept & AI Count`;
+        results.forEach((obj) => {
+            const { name, confidence } = obj;
+            if (confidence < CONFIDENCE_THRESHOLD) return; // Ignora al de 0.42
+            if (name === TARGET_CLASS) {
+                attendance++;
+            }
         });
-    }
+        // ==============================================
 
+        // Guarda el conteo calculado automáticamente en Firebase
+        return database.ref(`events/${currentEventId}/zones/${activeZoneKey}`).update({
+            status: "terminado",
+            count: attendance, 
+            feedback: "Accepted & Processed via CATCH AI Engine"
+        });
+    })
+    .then(() => {
+        bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
+    })
+    .catch(err => {
+        alert("AI Server Communication Error: " + err.message);
+        btn.disabled = false;
+        btn.innerHTML = `✅ Accept & AI Count`;
+    });
+}
     function updateSaveButton() {
         const zonesKeys = Object.keys(currentZonesData);
         if(zonesKeys.length === 0) return;

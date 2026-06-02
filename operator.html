@@ -162,13 +162,13 @@
           let actionButtonHTML = '';
 
           if (z.status === 'terminado') {
-            statusBadgeHTML = `<span class="badge bg-success-soft text-success fw-bold px-3 py-1">TERMINADO</span>`;
+            statusBadgeHTML = `<span class="badge bg-success-soft text-success fw-bold px-3 py-1">DONE</span>`;
             actionButtonHTML = `
               <div class="text-end text-success fw-bold small pe-2">
                 <i class="fi fi-check-circle me-1"></i> Counted: ${z.count}
               </div>`;
           } else if (z.status === 'pendiente') {
-            statusBadgeHTML = `<span class="badge bg-warning-soft text-warning fw-bold px-3 py-1 animate-flash">PENDIENTE</span>`;
+            statusBadgeHTML = `<span class="badge bg-warning-soft text-warning fw-bold px-3 py-1 animate-flash">PENDING</span>`;
             actionButtonHTML = `
               <button class="btn btn-sm btn-light text-muted px-3 border" disabled>
                 <div class="spinner-border spinner-border-sm me-1" role="status"></div> Pending Review
@@ -177,10 +177,10 @@
             // Estado: Activo (esperando foto o rechazado)
             if (z.feedback && z.feedback !== "Accepted") {
               statusBadgeHTML = `
-                <span class="badge bg-danger-soft text-danger fw-bold px-3 py-1 d-block mb-1">ACTIVO (RECHAZADO)</span>
+                <span class="badge bg-danger-soft text-danger fw-bold px-3 py-1 d-block mb-1">REJECTED</span>
                 <small class="text-danger d-block smaller fw-medium" style="max-width:200px;">❌ ${z.feedback}</small>`;
             } else {
-              statusBadgeHTML = `<span class="badge bg-info-soft text-info fw-bold px-3 py-1">ACTIVO</span>`;
+              statusBadgeHTML = `<span class="badge bg-info-soft text-info fw-bold px-3 py-1">ACTIVE</span>`;
             }
 
             actionButtonHTML = `
