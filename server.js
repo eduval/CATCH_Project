@@ -3,43 +3,53 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
-// Permite transferir imágenes pesadas en Base64 sin bloqueos de seguridad (CORS)
+// Enable CORS for all origins so the frontend can communicate seamlessly
 app.use(cors());
-app.use(express.json({ limit: '50mb' }));
 
-// ENDPOINT AUTOMÁTICO
+// Configure middleware to parse JSON payloads with a 50mb limit for heavy Base64 images
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// DYNAMIC AI EMULATION ENDPOINT
 app.post('/predict', (req, res) => {
-    const base64Image = req.body.image; // Aquí llega la foto real capturada por el operador
+    const base64Image = req.body.image;
 
     if (!base64Image) {
         return res.status(400).json({ error: "No image data received" });
     }
 
-    console.log("📸 CATCH AI Engine: Analizando nueva captura entrante...");
+    console.log("📸 CATCH AI Engine: Analyzing new incoming capture...");
 
-    // 🧠 AQUÍ CORRE EL RECONOCIMIENTO DE PIXELES REAL
-    // Para tu demostración, emulamos un motor de red neuronal que cuenta cuántas personas 
-    // encuentra en el archivo de texto Base64 enviado, variando el conteo de forma 100% orgánica.
+    // 🧠 IMAGE-BASED PSEUDO-RANDOM ALGORITHM
+    // Instead of using fixed values, we derive the count from the Base64 string length
+    // to ensure that different images generate completely organic and unique results.
     const stringLength = base64Image.length;
-    let dynamicCount = (stringLength % 6) + 3; // Genera un número del 3 al 8 basado matemáticamente en el peso de la imagen
+    
+    // Calculate a base count between 2 and 12 using the modulus of the string length
+    let dynamicCount = (stringLength % 11) + 2; 
 
-    // Creamos los resultados de la IA de forma automatizada según la foto
+    // Add a controlled random variance factor (-1, 0, or 1) 
+    // This emulates a real neural network recalculating confidence thresholds on the fly
+    const randomFactor = Math.floor(Math.random() * 3) - 1; 
+    dynamicCount = Math.max(1, dynamicCount + randomFactor); // Ensure at least 1 person is detected
+
+    // Initialize baseline ambient objects detected by the AI
     let aiResults = [
-        { name: "chair", confidence: 0.91 },
-        { name: "cup", confidence: 0.78 }
+        { name: "chair", confidence: 0.88 },
+        { name: "table", confidence: 0.74 }
     ];
 
-    // Inyectamos dinámicamente el número de personas que la IA "leyó" en la imagen
+    // Dynamically inject individual 'person' objects with realistic confidence scores
     for (let i = 0; i < dynamicCount; i++) {
-        // Le ponemos un confidence aleatorio arriba de 0.5 a las válidas
-        let randomConfidence = (Math.random() * (0.99 - 0.70) + 0.70).toFixed(5);
+        // Generate a random confidence score between 0.65 and 0.98 for each individual
+        let randomConfidence = (Math.random() * (0.98 - 0.65) + 0.65).toFixed(5);
         aiResults.push({ name: "person", confidence: parseFloat(randomConfidence) });
     }
 
-    // Agregamos una persona con baja confianza para que tu filtro de 0.5 demuestre que funciona
-    aiResults.push({ name: "person", confidence: 0.42103 });
+    // Inject a false-positive detection with low confidence to validate the frontend's 0.5 filter
+    aiResults.push({ name: "person", confidence: 0.38412 });
 
-    // Armamos la estructura exacta que lee tu script
+    // Construct the standard response payload required by active-counting.html
     const responsePayload = {
         images: [
             {
@@ -49,9 +59,11 @@ app.post('/predict', (req, res) => {
         ]
     };
 
+    console.log(`📊 Analysis completed. Valid 'person' objects detected: ${dynamicCount}`);
     res.json(responsePayload);
 });
 
+// START SERVER
 app.listen(PORT, () => {
     console.log(`🚀 CATCH AI Server running automatically on http://localhost:${PORT}`);
 });
