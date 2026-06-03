@@ -165,12 +165,15 @@
 
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyBviEaIKKWNPXnxQcHlq3y-Zzs8bY-SqaU",
-      authDomain: "cctb-catch-testing.firebaseapp.com",
-      databaseURL: "https://cctb-catch-testing-default-rtdb.firebaseio.com/", 
-      projectId: "cctb-catch-testing",
-      storageBucket: "cctb-catch-testing.appspot.com"
-    };
+  apiKey: "AIzaSyBviEaIKKwNPXnxQcHlq3y-Zzs8bY-SqaU",
+  authDomain: "cctb-catch-testing.firebaseapp.com",
+  databaseURL: "https://cctb-catch-testing-default-rtdb.firebaseio.com",
+  projectId: "cctb-catch-testing",
+  storageBucket: "cctb-catch-testing.firebasestorage.app",
+  messagingSenderId: "734153648345",
+  appId: "1:734153648345:web:7692ec17fc87adc463b6c8",
+  measurementId: "G-PSTJ6T7LC7"
+};
 
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
@@ -244,29 +247,40 @@
             
             let statusClass = '';
             let badgeClass = 'bg-secondary text-white';
+            let statusText = 'ACTIVE'; // Por defecto si no entra a los otros
 
+            // Evaluamos lo que viene de Firebase en español, pero asignamos inglés real
             if (z.status === 'terminado') {
                 statusClass = 'validated';
                 badgeClass = 'bg-success text-white';
+                statusText = 'COMPLETED';
             } else if (z.status === 'pendiente') {
                 statusClass = 'pending-review';
                 badgeClass = 'bg-warning text-dark';
-            } else if (z.status === 'activo' && z.feedback) {
-                statusClass = 'rejected';
-                badgeClass = 'bg-danger text-white';
+                statusText = 'PENDING';
+            } else if (z.status === 'activo') {
+                if (z.feedback && z.feedback !== "Accepted & Processed via CATCH AI Engine") {
+                    statusClass = 'rejected';
+                    badgeClass = 'bg-danger text-white';
+                    statusText = 'REJECTED';
+                } else {
+                    statusClass = '';
+                    badgeClass = 'bg-secondary text-white';
+                    statusText = 'ACTIVE';
+                }
             }
 
             card.innerHTML = `
                 <div class="zone-card p-4 d-flex flex-column ${statusClass}">
                     <div class="d-flex justify-content-between mb-3">
                         <h6 class="fw-bold mb-0">${z.name}</h6>
-                        <span class="status-badge ${badgeClass}">${z.status.toUpperCase()}</span>
+                        <span class="status-badge ${badgeClass}">${statusText}</span>
                     </div>
 
                     ${z.photoUrl ? 
                         `<img src="${z.photoUrl}" class="img-preview">` : 
                         `<div class="bg-light rounded flex-grow-1 d-flex align-items-center justify-content-center text-muted mb-3 small border-dashed text-center px-3">
-                            <span>${z.status === 'activo' && z.feedback ? `⚠️ Rejected: <br><strong class="text-danger">${z.feedback}</strong><br>Waiting for retake...` : 'Waiting for operator photo...'}</span>
+                            <span>${z.status === 'activo' && z.feedback && z.feedback !== "Accepted & Processed via CATCH AI Engine" ? `⚠️ Rejected: <br><strong class="text-danger">${z.feedback}</strong><br>Waiting for retake...` : 'Waiting for operator photo...'}</span>
                         </div>`
                     }
 
@@ -320,46 +334,41 @@
         });
     }
 
-function approveAndCount() {
+    function approveAndCount() {
     const targetZone = currentZonesData[activeZoneKey];
-    const base64Photo = targetZone.photoUrl; // La foto real del operador
+    const base64Photo = targetZone ? targetZone.photoUrl : ""; 
     
     const btn = document.getElementById('ai-trigger-btn');
     btn.disabled = true;
     btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Analyzing image objects via CATCH AI...`;
 
-    // Hace la petición POST real hacia tu servidor de Node.js
     fetch("http://localhost:5000/predict", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ image: base64Photo }) // Le manda la foto de la zona
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64Photo })
     })
     .then(response => {
-        if (!response.ok) throw new Error("API HTTP Error status: " + response.status);
+        if (!response.ok) throw new Error("HTTP Error: " + response.status);
         return response.json();
     })
     .then(aiResponse => {
-        // ==============================================
-        // 🎯 TU LÓGICA DE FILTRADO EXACTA (No se toca)
-        // ==============================================
+        console.log("🎯 Response received from Node.js:", aiResponse);
+
+        // --- TU LÓGICA DE FILTRADO EXACTA ---
         const CONFIDENCE_THRESHOLD = 0.5;
         const TARGET_CLASS = "person";
         const results = aiResponse?.images?.[0]?.results || [];
         
         let attendance = 0;
-
         results.forEach((obj) => {
-            const { name, confidence } = obj;
-            if (confidence < CONFIDENCE_THRESHOLD) return; // Ignora al de 0.42
-            if (name === TARGET_CLASS) {
-                attendance++;
-            }
+            if (obj.confidence < CONFIDENCE_THRESHOLD) return;
+            if (obj.name === TARGET_CLASS) attendance++;
         });
-        // ==============================================
+        // -------------------------------------
 
-        // Guarda el conteo calculado automáticamente en Firebase
+        console.log(`📊 Calculated count: ${attendance}. Trying to save to Firebase...`);
+
+        // Guardamos en Firebase asegurándonos de que si falla, atrape el error aquí mismo
         return database.ref(`events/${currentEventId}/zones/${activeZoneKey}`).update({
             status: "terminado",
             count: attendance, 
@@ -367,14 +376,19 @@ function approveAndCount() {
         });
     })
     .then(() => {
-        bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
+        // Si todo sale bien, cierra el modal
+        const modalEl = document.getElementById('galleryModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) modalInstance.hide();
     })
     .catch(err => {
-        alert("AI Server Communication Error: " + err.message);
+        console.error("❌ Error in the process:", err);
+        alert("System Notice: " + err.message + "\nCheck browser console for details.");
         btn.disabled = false;
         btn.innerHTML = `✅ Accept & AI Count`;
     });
 }
+
     function updateSaveButton() {
         const zonesKeys = Object.keys(currentZonesData);
         if(zonesKeys.length === 0) return;
@@ -393,6 +407,7 @@ function approveAndCount() {
             breakdown.push({ name: currentZonesData[k].name, count: currentZonesData[k].count });
         });
 
+        // 📝 Armamos la estructura exacta de datos que espera Firebase y records.html
         const archiveRecord = {
             name: document.getElementById('display-name').innerText,
             date: document.getElementById('display-date').innerText.replace("Event Date: ", ""),
@@ -400,15 +415,30 @@ function approveAndCount() {
             breakdown: breakdown
         };
 
+        // 1. Guardar localmente (por respaldo en tu localStorage)
         let localHistory = localStorage.getItem('catch_saved_event_history');
         localHistory = localHistory ? JSON.parse(localHistory) : [];
         localHistory.unshift(archiveRecord);
         localStorage.setItem('catch_saved_event_history', JSON.stringify(localHistory));
 
-        database.ref('events/' + currentEventId).remove().then(() => {
-            alert("Success: Event finalized, verified and committed to historical records.");
-            location.reload();
-        });
+        console.log("📤 Subiendo registro histórico a Firebase...");
+
+        // 2. 🚀 ENVIAR A FIREBASE (El paso que faltaba)
+        // Subimos el registro al nodo 'records' para que records.html lo lea en tiempo real
+        database.ref('records').push(archiveRecord)
+            .then(() => {
+                console.log("✅ Guardado en historial de Firebase. Limpiando sesión activa...");
+                // 3. Una vez asegurado en el historial, limpiamos de la nube la sesión de conteo activo
+                return database.ref('events/' + currentEventId).remove();
+            })
+            .then(() => {
+                alert("Success: Event finalized, verified and committed to cloud historical records.");
+                location.reload();
+            })
+            .catch(err => {
+                console.error("❌ Error al archivar en Firebase:", err);
+                alert("Error saving to cloud history: " + err.message);
+            });
     }
 
     function cancelSession() {
