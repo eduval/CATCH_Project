@@ -8,18 +8,63 @@
   <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
 </head>
-
+      
 <body class="layout-admin aside-sticky bg-light header-sticky">
+
+  <script>
+  // El guardián del Administrador
+  const role = localStorage.getItem('userRole');
+  const loggedIn = localStorage.getItem('isLoggedIn');
+
+  // Si no ha iniciado sesión, o si es un operador metiche, lo botamos
+  if (loggedIn !== 'true' || role !== 'admin') {
+    alert("Access Denied: You do not have administrator privileges.");
+    window.location.href = 'login.html'; 
+  }
+</script>
 
   <div id="wrapper" class="d-flex align-items-stretch flex-column">
 
     <header id="header" class="d-flex align-items-center shadow-xs bg-white">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-          <a class="navbar-brand mx-2" href="index.html"><span class="h4 fw-bold text-primary">CATCH</span></a>
-          <div class="ms-auto">
-             <a href="profile.html" class="btn btn-sm btn-icon btn-light rounded-circle shadow-sm bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)"></a>
+      <div class="container-fluid position-relative">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between w-100">
+          
+          <div class="align-items-start">
+            <a href="#aside-main" class="btn-sidebar-toggle h-100 d-inline-block d-lg-none p-2">
+              <span>
+                <svg width="25" height="25" viewBox="0 0 20 20">
+                  <path d="M 19.9876 1.998 L -0.0108 1.998 L -0.0108 -0.0019 L 19.9876 -0.0019 L 19.9876 1.998 Z"></path>
+                  <path d="M 19.9876 7.9979 L -0.0108 7.9979 L -0.0108 5.9979 L 19.9876 5.9979 L 19.9876 7.9979 Z"></path>
+                  <path d="M 19.9876 13.9977 L -0.0108 13.9977 L -0.0108 11.9978 L 19.9876 11.9978 L 19.9876 13.9977 Z"></path>
+                  <path d="M 19.9876 19.9976 L -0.0108 19.9976 L -0.0108 17.9976 L 19.9876 17.9976 L 19.9876 19.9976 Z"></path>
+                </svg>
+              </span>
+            </a>
+            
+            <a class="navbar-brand d-none d-lg-block mx-2" href="index.html">
+              <span class="h4 fw-bold text-primary">CATCH</span>
+            </a>
           </div>
+
+          <ul class="list-inline list-unstyled mb-0 d-flex align-items-center">
+            <li class="list-inline-item mx-1 dropdown">
+              <a href="#" class="btn btn-sm btn-light rounded-circle text-primary-hover dropdown-toggle" data-bs-toggle="dropdown"><i class="fi fi-bell"></i></a>
+            </li>
+            <li class="list-inline-item mx-1 dropdown">
+              <a href="#" id="dropdownAccountOptions" class="btn btn-sm btn-icon btn-light dropdown-toggle rounded-circle shadow bg-cover" style="background-image:url(assets/images/avatars/admin.jpg)" data-bs-toggle="dropdown" aria-haspopup="true"></a>
+              <div aria-labelledby="dropdownAccountOptions" class="dropdown-menu dropdown-menu-clean dropdown-menu-navbar-autopos dropdown-menu-invert p-0 mt-2 w-300">
+                <div class="dropdown-header bg-primary text-white p-4 text-start">
+                  <span class="d-block fw-medium">Admin User</span>
+                  <span class="d-block smaller">admin@catch.hub</span>
+                </div>
+                <div class="dropdown-divider mb-3"></div>
+                <a href="profile.html" class="dropdown-item"><i class="fi fi-user me-2"></i> My Profile</a>
+                <a href="settings.html" class="dropdown-item"><i class="fi fi-settings me-2"></i> System Settings</a>
+                <div class="dropdown-divider mb-0 mt-3"></div>
+                <a href="login.html" class="dropdown-footer fw-medium py-3 px-4"><i class="fi fi-power float-start"></i> Log Out</a>
+              </div>
+            </li>
+          </ul>
         </nav>
       </div>
     </header>
@@ -27,89 +72,68 @@
     <div id="wrapper_content" class="d-flex flex-fill">
 
       <aside id="aside-main" class="aside-start aside-hide-xs bg-white shadow-sm d-flex flex-column px-2">
-  
-  <div class="py-4 px-3 mb-3 border-bottom text-center">
-    <h4 class="fw-bold text-primary mb-0">CATCH</h4>
-    <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
-  </div>
+        <div class="py-4 px-3 mb-3 border-bottom text-center">
+          <h4 class="fw-bold text-primary mb-0">CATCH</h4>
+          <small class="text-muted fw-bold text-uppercase" style="font-size: 10px; letter-spacing: 1px;">Service Track</small>
+        </div>
 
-  <nav class="nav-deep nav-deep-sm nav-deep-light">
-    <ul class="nav flex-column">
-      
-      <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <span>Dashboard</span>
-        </a>
-      </li>
+        <nav class="nav-deep nav-deep-sm nav-deep-light">
+          <ul class="nav flex-column">
+            <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="active-counting.html">
+                <span>Active Counting</span>
+                <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="reports.html"><span>Reports/Analytics</span></a>
+            </li>
+            <li class="nav-item border-bottom pb-3">
+              <a class="nav-link" href="records.html"><span>Attendance Records</span></a>
+            </li>
 
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="active-counting.html">
-          <span>Active Counting</span>
-          <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
-        </a>
-      </li>
+            <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile.html"><span>My Profile</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="settings.html"><span>System Settings</span></a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-      <li class="nav-item">
-        <a class="nav-link" href="reports.html">
-          <span>Reports/Analytics</span>
-        </a>
-      </li>
+      <style>
+        /* Refined Text-Only Styling */
+        #aside-main .nav-link {
+          display: flex;
+          align-items: center;
+          padding: 0.8rem 1.5rem;
+          color: #495057;
+          font-weight: 500;
+          transition: all 0.2s ease-in-out;
+          text-decoration: none;
+        }
 
-      <li class="nav-item border-bottom pb-3">
-        <a class="nav-link" href="records.html">
-          <span>Attendance Records</span>
-        </a>
-      </li>
+        #aside-main .nav-item.active .nav-link,
+        #aside-main .nav-link:hover {
+          color: #007bff;
+          background-color: #f8f9fa;
+        }
 
-      <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="profile.html">
-          <span>My Profile</span>
-        </a>
-      </li>
+        #aside-main .nav-item.active {
+          border-left: 4px solid #007bff;
+        }
 
-      <li class="nav-item">
-        <a class="nav-link" href="settings.html">
-          <span>System Settings</span>
-        </a>
-      </li>
-
-    </ul>
-  </nav>
-</aside>
-
-<style>
-  /* Refined Text-Only Styling */
-  #aside-main .nav-link {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem 1.5rem; /* Increased horizontal padding for a balanced look */
-    color: #495057;
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
-  }
-
-  /* Active and Hover States */
-  #aside-main .nav-item.active .nav-link,
-  #aside-main .nav-link:hover {
-    color: #007bff;
-    background-color: #f8f9fa;
-  }
-
-  /* Left accent line for the active page */
-  #aside-main .nav-item.active {
-    border-left: 4px solid #007bff;
-  }
-
-  #aside-main .nav-title {
-    letter-spacing: 0.5px;
-    opacity: 0.8;
-  }
-</style>
+        #aside-main .nav-title {
+          letter-spacing: 0.5px;
+          opacity: 0.8;
+        }
+      </style>
 
       <main id="middle" class="flex-fill p-4">
         
@@ -140,18 +164,18 @@
                     <tbody id="zone-list">
                       <tr>
                         <td><input type="text" class="form-control form-control-sm" value="Main Hall"></td>
-                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
+                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="confirmDeleteZone(this)"><i class="fi fi-trash"></i></button></td>
                       </tr>
                       <tr>
                         <td><input type="text" class="form-control form-control-sm" value="Balcony"></td>
-                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
+                        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="confirmDeleteZone(this)"><i class="fi fi-trash"></i></button></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
               <div class="card-footer bg-white border-top-0 p-3 text-end">
-                <button class="btn btn-sm btn-success px-4" onclick="alert('Zones saved to Firebase placeholder!')">Save Configuration</button>
+                <button class="btn btn-sm btn-success px-4" onclick="saveZones()">Save Configuration</button>
               </div>
             </div>
           </div>
@@ -165,23 +189,23 @@
                 <div class="mb-3">
                   <label class="form-label small fw-bold">Active Services</label>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" checked id="s1">
+                    <input class="form-check-input" type="checkbox" checked id="s1" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s1">Sunday Morning (9:00 AM)</label>
                   </div>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" checked id="s2">
+                    <input class="form-check-input" type="checkbox" checked id="s2" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s2">Sunday Evening (5:00 PM)</label>
                   </div>
                   <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="s3">
+                    <input class="form-check-input" type="checkbox" id="s3" onchange="handleServiceChange(this)">
                     <label class="form-check-label small" for="s3">Midweek Prayer (7:00 PM)</label>
                   </div>
                 </div>
                 <hr>
                 <div class="mb-3">
-                  <label class="form-label small fw-bold">Add New Service</label>
-                  <input type="text" class="form-control form-control-sm mb-2" placeholder="e.g. Youth Night">
-                  <button class="btn btn-sm btn-outline-primary w-100">Add Service</button>
+                <label class="form-label small fw-bold">Add New Service</label>
+                <input type="text" id="new-service-name" class="form-control form-control-sm mb-2" placeholder="e.g. Youth Night">
+                <button class="btn btn-sm btn-outline-primary w-100" onclick="addNewService()">Add Service</button>
                 </div>
               </div>
             </div>
@@ -193,14 +217,87 @@
   </div>
 
   <script>
-    function addZoneRow() {
-      const tbody = document.getElementById('zone-list');
-      const row = `<tr>
-        <td><input type="text" class="form-control form-control-sm" placeholder="New Zone Name..."></td>
-        <td class="text-end"><button class="btn btn-sm btn-icon btn-light text-danger" onclick="this.closest('tr').remove()"><i class="fi fi-trash"></i></button></td>
-      </tr>`;
-      tbody.insertAdjacentHTML('beforeend', row);
+  // 1. Agregar zona con validación para que no sea infinita/vacía
+  function addZoneRow() {
+    const tbody = document.getElementById('zone-list');
+    const lastInput = tbody.querySelector('tr:last-child input');
+
+    // Validación: Si el último input está vacío, no deja agregar otro
+    if (lastInput && lastInput.value.trim() === "") {
+      alert("Please enter a name for the current zone before adding a new one.");
+      lastInput.focus();
+      return;
     }
+
+    const row = `<tr>
+      <td><input type="text" class="form-control form-control-sm" placeholder="New Zone Name..."></td>
+      <td class="text-end">
+        <button class="btn btn-sm btn-icon btn-light text-danger" onclick="confirmDeleteZone(this)">
+          <i class="fi fi-trash"></i>
+        </button>
+      </td>
+    </tr>`;
+    tbody.insertAdjacentHTML('beforeend', row);
+  }
+
+  // 2. Confirmación antes de borrar (Feedback de QA)
+  function confirmDeleteZone(button) {
+    if (confirm("Are you sure you want to remove this zone?")) {
+      button.closest('tr').remove();
+    }
+  }
+
+  // 3. Simulación de guardado con feedback real
+  function saveZones() {
+    const inputs = document.querySelectorAll('#zone-list input');
+    let hasEmpty = false;
+
+    inputs.forEach(input => {
+      if (input.value.trim() === "") hasEmpty = true;
+    });
+
+    if (hasEmpty) {
+      alert("Cannot save: One or more zones have empty names.");
+      return;
+    }
+
+    alert('Configuration saved successfully to Firebase!');
+  }
+
+  function addNewService() {
+    const input = document.getElementById('new-service-name');
+    const serviceName = input.value.trim();
+    
+    if (serviceName === "") {
+        alert("Please enter a service name.");
+        return;
+    }
+
+    const container = document.querySelector('.mb-3 .form-check').parentNode;
+    const newId = 's' + (document.querySelectorAll('.form-check-input').length + 1);
+    
+    const newServiceHtml = `
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" checked id="${newId}" onchange="handleServiceChange(this)">
+            <label class="form-check-label small" for="${newId}">${serviceName}</label>
+        </div>
+    `;
+    
+    // Insertamos el nuevo servicio antes del <hr>
+    document.querySelector('hr').insertAdjacentHTML('beforebegin', newServiceHtml);
+    
+    // Limpiamos el input y damos feedback
+    input.value = "";
+    console.log("Service added:", serviceName);
+  }
+
+  function handleServiceChange(checkbox) {
+    const status = checkbox.checked ? 'activated' : 'deactivated';
+    const serviceName = checkbox.nextElementSibling.innerText;
+    
+    // Esto se verá en la consola del navegador (F12)
+    console.log(`Service ${serviceName} is now ${status}`);
+  }
   </script>
 
   <script src="assets/js/core.min.js"></script>

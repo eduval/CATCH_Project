@@ -4,44 +4,26 @@
   <meta charset="UTF-8">
   <title>CATCH | Active Counting</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+     HEAD
   <link rel="stylesheet" href="assets/css/core.min.css">
+=======
+  <link class="rtl-invert" rel="stylesheet" href="assets/css/core.min.css">
+>>>>>>> origin/daniela
   <link rel="stylesheet" href="assets/css/vendor_bundle.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap">
   
   <style>
-    /* Refined Text-Only Styling */
-    #aside-main .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 0.8rem 1.5rem; 
-      color: #495057;
-      font-weight: 500;
-      transition: all 0.2s ease-in-out;
-      text-decoration: none;
-    }
+    #aside-main .nav-link { display: flex; align-items: center; padding: 0.8rem 1.5rem; color: #495057; font-weight: 500; transition: all 0.2s ease-in-out; text-decoration: none; }
+    #aside-main .nav-item.active .nav-link, #aside-main .nav-link:hover { color: #007bff; background-color: #f8f9fa; }
+    #aside-main .nav-item.active { border-left: 4px solid #007bff; }
+    #aside-main .nav-title { letter-spacing: 0.5px; opacity: 0.8; }
 
-    /* Active and Hover States */
-    #aside-main .nav-item.active .nav-link,
-    #aside-main .nav-link:hover {
-      color: #007bff;
-      background-color: #f8f9fa;
-    }
-
-    /* Left accent line for the active page */
-    #aside-main .nav-item.active {
-      border-left: 4px solid #007bff;
-    }
-
-    #aside-main .nav-title {
-      letter-spacing: 0.5px;
-      opacity: 0.8;
-    }
-
-    /* Card UI Custom Styling Elements */
+    /* Card UI Custom Styling */
     .zone-card { border: 2px solid #e9ecef; border-radius: 12px; transition: 0.2s; background: #fff; min-height: 320px; position: relative; }
     .zone-card.validated { border-color: #28a745; background-color: #f8fff9; }
     .zone-card.has-selection { border-color: #007bff; background-color: #f0f7ff; }
     .zone-card.rejected { border-color: #dc3545; background-color: #fff5f5; }
+    .zone-card.pending-review { border-color: #ffc107; background-color: #fffdf5; }
     
     .img-preview { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 15px; border: 1px solid #dee2e6; }
     .status-badge { font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
@@ -49,9 +31,15 @@
     .submission-item { cursor: pointer; border: 2px solid transparent; transition: 0.2s; border-radius: 8px; overflow: hidden; position: relative; }
     .submission-item:hover { border-color: #007bff; }
     .submission-item.selected { border-color: #007bff; box-shadow: 0 0 10px rgba(0,123,255,0.3); }
-    .submission-item img { width: 100%; height: 100px; object-fit: cover; }
-    .submission-meta { font-size: 10px; padding: 5px; background: #f8f9fa; border-top: 1px solid #eee; }
+    .submission-item img { width: 100%; height: 150px; object-fit: cover; }
+    .submission-meta { font-size: 10px; padding: 8px; background: #f8f9fa; border-top: 1px solid #eee; }
   </style>
+
+  <script>
+    if (localStorage.getItem('isLoggedIn') !== 'true' || localStorage.getItem('userRole') !== 'admin') {
+      window.location.href = 'login.html';
+    }
+  </script>
 </head>
 
 <body class="layout-admin aside-sticky bg-light header-sticky">
@@ -63,7 +51,7 @@
         <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
           <a class="navbar-brand mx-2" href="index.html"><span class="h4 fw-bold text-primary">CATCH</span></a>
           <div id="session-indicator-ui" class="d-none">
-            <span class="badge bg-success-soft text-success px-3 py-2">● LIVE SESSION RUNNING</span>
+            <span class="badge bg-success-soft text-success px-3 py-2">● LIVE CLOUD SESSION RUNNING</span>
           </div>
         </nav>
       </div>
@@ -79,28 +67,18 @@
         <nav class="nav-deep nav-deep-sm nav-deep-light">
           <ul class="nav flex-column">
             <li class="nav-title text-muted smaller fw-bold text-uppercase mb-2 ps-4">Operations</li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html"><span>Dashboard</span></a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="index.html"><span>Dashboard</span></a></li>
             <li class="nav-item active">
               <a class="nav-link d-flex align-items-center" href="active-counting.html">
                 <span>Active Counting</span>
                 <span class="badge bg-danger-soft text-danger ms-auto smaller py-1 px-2">LIVE</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="reports.html"><span>Reports/Analytics</span></a>
-            </li>
-            <li class="nav-item border-bottom pb-3">
-              <a class="nav-link" href="records.html"><span>Attendance Records</span></a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="reports.html"><span>Reports/Analytics</span></a></li>
+            <li class="nav-item border-bottom pb-3"><a class="nav-link" href="records.html"><span>Attendance Records</span></a></li>
             <li class="nav-title text-muted smaller fw-bold text-uppercase mt-4 mb-2 ps-4">Management</li>
-            <li class="nav-item">
-              <a class="nav-link" href="profile.html"><span>My Profile</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="settings.html"><span>System Settings</span></a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="profile.html"><span>My Profile</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="settings.html"><span>System Settings</span></a></li>
           </ul>
         </nav>
       </aside>
@@ -110,7 +88,7 @@
         <div id="step-setup" class="py-4">
             <div class="card shadow-xs border-0 mx-auto" style="max-width: 650px;">
                 <div class="card-body p-5">
-                    <h4 class="fw-bold mb-4">Start New Session</h4>
+                    <h4 class="fw-bold mb-4">Start New Cloud Session</h4>
                     <div class="row g-3 mb-4 text-start">
                         <div class="col-md-8">
                             <label class="form-label small fw-bold">EVENT NAME</label>
@@ -124,7 +102,7 @@
 
                     <div class="mb-4 text-start">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label class="form-label small fw-bold">ZONES</label>
+                            <label class="form-label small fw-bold">ZONES FOR THIS EVENT</label>
                             <button class="btn btn-sm btn-outline-primary" onclick="addZoneInput()">+ Add Zone</button>
                         </div>
                         <div id="zone-setup-list" class="bg-light p-3 rounded">
@@ -134,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="initializeSession()">Open Session</button>
+                    <button class="btn btn-primary btn-lg w-100 py-3 fw-bold" onclick="initializeSession()">Publish Event to Cloud</button>
                 </div>
             </div>
         </div>
@@ -146,9 +124,8 @@
                     <p class="text-muted small mb-0" id="display-date"></p>
                 </div>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary btn-sm px-3" id="cancel-session-btn" onclick="cancelSession()">Cancel Session</button>
-                    <button id="toggle-session-btn" class="btn btn-success btn-sm px-4 fw-bold" onclick="toggleSession()">Start Session</button>
-                    <button class="btn btn-danger btn-sm px-4 fw-bold d-none" id="save-session-btn" onclick="saveToSystem()">Save All Records</button>
+                    <button class="btn btn-outline-danger btn-sm px-3" onclick="cancelSession()">Cancel Session</button>
+                    <button class="btn btn-success btn-sm px-4 fw-bold d-none" id="save-session-btn" onclick="saveToSystem()">Finish & Archive Event</button>
                 </div>
             </div>
 
@@ -160,74 +137,54 @@
   </div>
 
   <div class="modal fade" id="galleryModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-dialog-centered">
       <div class="modal-content border-0">
         <div class="modal-header border-bottom-0 pb-0">
-          <h5 class="modal-title fw-bold">Staff Submissions: <span id="gallery-zone-name"></span></h5>
+          <h5 class="modal-title fw-bold">Operator Submission: <span id="gallery-zone-name"></span></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body py-4">
-            <p class="text-muted small mb-4">Select an image to approve for counting, or notify operators to retake the photo if none meet standards.</p>
-            <div class="row g-3" id="submission-list"></div>
+        <div class="modal-body py-4 text-start">
+            <div id="submission-container" class="text-center">
+                </div>
+            <div class="mt-3">
+              <label class="form-label small fw-bold text-muted">FEEDBACK ON REJECTION (OPTIONAL)</label>
+              <input type="text" id="rejection-feedback" class="form-control" placeholder="E.g., Photo blurry, take another shot please...">
+            </div>
         </div>
         <div class="modal-footer border-top-0 d-flex gap-2">
-            <button class="btn btn-outline-danger py-3 px-4 fw-bold" onclick="rejectSubmissionsNotify()">Reject & Notify Operator</button>
-            <button class="btn btn-primary flex-grow-1 py-3 fw-bold" id="confirm-selection-btn" disabled onclick="confirmSelection()">Use Selected Image & Count</button>
+            <button class="btn btn-outline-danger py-3 px-3 fw-bold" onclick="rejectSubmission()">❌ Reject Photo</button>
+            <button id="ai-trigger-btn" class="btn btn-success flex-grow-1 py-3 fw-bold" onclick="approveAndCount()">
+              ✅ Accept & AI Count
+            </button>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
   <script src="assets/js/core.min.js"></script>
   <script src="assets/js/vendor_bundle.min.js"></script>
 
   <script>
-    let isSessionLive = false;
-    let zones = [];
-    let activeZoneId = null;
-    let tempSelectedPhoto = null;
+    const firebaseConfig = {
+  apiKey: "AIzaSyBviEaIKKwNPXnxQcHlq3y-Zzs8bY-SqaU",
+  authDomain: "cctb-catch-testing.firebaseapp.com",
+  databaseURL: "https://cctb-catch-testing-default-rtdb.firebaseio.com",
+  projectId: "cctb-catch-testing",
+  storageBucket: "cctb-catch-testing.firebasestorage.app",
+  messagingSenderId: "734153648345",
+  appId: "1:734153648345:web:7692ec17fc87adc463b6c8",
+  measurementId: "G-PSTJ6T7LC7"
+};
 
-    const mockSubmissions = [
-        { id: 101, staff: 'Operator-A', time: '09:45 AM', url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400' },
-        { id: 102, staff: 'Staff-04', time: '09:47 AM', url: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=400' }
-    ];
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-    // PERSISTENCE ENGINE: Save State
-    function saveActiveState() {
-        const payload = {
-            isSessionLive: isSessionLive,
-            zones: zones,
-            name: document.getElementById('display-name').innerText,
-            date: document.getElementById('display-date').innerText,
-            isInitialized: !document.getElementById('step-manage').classList.contains('d-none')
-        };
-        localStorage.setItem('catch_active_session_running', JSON.stringify(payload));
-    }
-
-    // PERSISTENCE ENGINE: Load State
-    function loadActiveState() {
-        const saved = localStorage.getItem('catch_active_session_running');
-        if (!saved) return;
-
-        const data = JSON.parse(saved);
-        if (data.isInitialized) {
-            zones = data.zones;
-            isSessionLive = data.isSessionLive;
-
-            document.getElementById('display-name').innerText = data.name;
-            document.getElementById('display-date').innerText = data.date;
-            
-            document.getElementById('step-setup').classList.add('d-none');
-            document.getElementById('step-manage').classList.remove('d-none');
-
-            const btn = document.getElementById('toggle-session-btn');
-            btn.innerText = isSessionLive ? "Stop Session" : "Start Session";
-            btn.className = isSessionLive ? "btn btn-outline-danger btn-sm px-4 fw-bold" : "btn btn-success btn-sm px-4 fw-bold";
-            document.getElementById('session-indicator-ui').className = isSessionLive ? 'd-block' : 'd-none';
-
-            renderZones();
-        }
-    }
+    let currentEventId = "active_session"; 
+    let currentZonesData = {};
+    let activeZoneKey = null;
 
     function addZoneInput() {
         const html = `<div class="input-group mb-2 zone-input-row"><input type="text" class="form-control" placeholder="Zone Name..."><button class="btn btn-outline-danger" onclick="this.parentElement.remove()">Remove</button></div>`;
@@ -235,88 +192,114 @@
     }
 
     function initializeSession() {
-        const name = document.getElementById('session-name').value;
+        const name = document.getElementById('session-name').value.trim();
         const date = document.getElementById('session-date').value;
         if(!name || !date) return alert("Required: Name and Date.");
 
-        zones = [];
+        let zonesPayload = {};
         document.querySelectorAll('.zone-input-row input').forEach((inp, i) => {
-            if(inp.value) zones.push({ id: i, name: inp.value, selectedPhoto: null, count: 0, validated: false, statusText: 'WAITING' });
+            if(inp.value) {
+                const zoneKey = `zone_${i}`;
+                zonesPayload[zoneKey] = {
+                    name: inp.value,
+                    status: "activo",
+                    photoUrl: "",
+                    count: 0,
+                    feedback: ""
+                };
+            }
         });
 
-        document.getElementById('display-name').innerText = name;
-        document.getElementById('display-date').innerText = "Event Date: " + date;
-        document.getElementById('step-setup').classList.add('d-none');
-        document.getElementById('step-manage').classList.remove('d-none');
-        
-        saveActiveState();
-        renderZones();
+        database.ref('events/' + currentEventId).set({
+            name: name,
+            date: date,
+            zones: zonesPayload
+        }).then(() => {
+            listenToLiveSession();
+        }).catch(err => alert("Firebase Error: " + err.message));
     }
 
-    function toggleSession() {
-        isSessionLive = !isSessionLive;
-        const btn = document.getElementById('toggle-session-btn');
-        btn.innerText = isSessionLive ? "Stop Session" : "Start Session";
-        btn.className = isSessionLive ? "btn btn-outline-danger btn-sm px-4 fw-bold" : "btn btn-success btn-sm px-4 fw-bold";
-        document.getElementById('session-indicator-ui').className = isSessionLive ? 'd-block' : 'd-none';
-        
-        saveActiveState();
-        renderZones();
+    function listenToLiveSession() {
+        database.ref('events/' + currentEventId).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (!data) {
+                document.getElementById('step-setup').classList.remove('d-none');
+                document.getElementById('step-manage').classList.add('d-none');
+                document.getElementById('session-indicator-ui').className = 'd-none';
+                return;
+            }
+
+            document.getElementById('display-name').innerText = data.name;
+            document.getElementById('display-date').innerText = "Event Date: " + data.date;
+            document.getElementById('step-setup').classList.add('d-none');
+            document.getElementById('step-manage').classList.remove('d-none');
+            document.getElementById('session-indicator-ui').className = 'd-block';
+
+            currentZonesData = data.zones || {};
+            renderZones(currentZonesData);
+        });
     }
 
-    // CANCEL SESSION & START OVER LOGIC
-    function cancelSession() {
-        if (confirm("Are you sure you want to completely cancel this active session? All current selections will be discarded.")) {
-            localStorage.removeItem('catch_active_session_running');
-            location.reload();
-        }
-    }
-
-    function renderZones() {
+    function renderZones(zonesObj) {
         const grid = document.getElementById('zone-grid');
         grid.innerHTML = '';
-        zones.forEach(z => {
+
+        Object.keys(zonesObj).forEach(key => {
+            const z = zonesObj[key];
             const card = document.createElement('div');
             card.className = 'col-md-4';
             
             let statusClass = '';
             let badgeClass = 'bg-secondary text-white';
-            if (z.validated) {
+            let statusText = 'ACTIVE'; // Por defecto si no entra a los otros
+
+            // Evaluamos lo que viene de Firebase en español, pero asignamos inglés real
+            if (z.status === 'terminado') {
                 statusClass = 'validated';
                 badgeClass = 'bg-success text-white';
-            } else if (z.statusText === 'REJECTED') {
-                statusClass = 'rejected';
-                badgeClass = 'bg-danger text-white';
-            } else if (z.selectedPhoto) {
-                statusClass = 'has-selection';
-                badgeClass = 'bg-primary text-white';
+                statusText = 'COMPLETED';
+            } else if (z.status === 'pendiente') {
+                statusClass = 'pending-review';
+                badgeClass = 'bg-warning text-dark';
+                statusText = 'PENDING';
+            } else if (z.status === 'activo') {
+                if (z.feedback && z.feedback !== "Accepted & Processed via CATCH AI Engine") {
+                    statusClass = 'rejected';
+                    badgeClass = 'bg-danger text-white';
+                    statusText = 'REJECTED';
+                } else {
+                    statusClass = '';
+                    badgeClass = 'bg-secondary text-white';
+                    statusText = 'ACTIVE';
+                }
             }
 
             card.innerHTML = `
-                <div class="zone-card p-4 d-flex flex-column ${statusClass} ${!isSessionLive ? 'opacity-50' : ''}">
+                <div class="zone-card p-4 d-flex flex-column ${statusClass}">
                     <div class="d-flex justify-content-between mb-3">
                         <h6 class="fw-bold mb-0">${z.name}</h6>
-                        <span class="status-badge ${badgeClass}">${z.statusText}</span>
+                        <span class="status-badge ${badgeClass}">${statusText}</span>
                     </div>
 
-                    ${z.selectedPhoto ? 
-                        `<img src="${z.selectedPhoto}" class="img-preview">` : 
+                    ${z.photoUrl ? 
+                        `<img src="${z.photoUrl}" class="img-preview">` : 
                         `<div class="bg-light rounded flex-grow-1 d-flex align-items-center justify-content-center text-muted mb-3 small border-dashed text-center px-3">
-                            <span>${z.statusText === 'REJECTED' ? '⚠️ Photo Rejected.<br>Waiting for Operator Resubmission...' : 'No Image Selected'}</span>
+                            <span>${z.status === 'activo' && z.feedback && z.feedback !== "Accepted & Processed via CATCH AI Engine" ? `⚠️ Rejected: <br><strong class="text-danger">${z.feedback}</strong><br>Waiting for retake...` : 'Waiting for operator photo...'}</span>
                         </div>`
                     }
 
                     <div class="mt-auto">
-                        ${!z.validated ? `
-                            <button class="btn btn-sm ${z.statusText === 'REJECTED' ? 'btn-danger' : 'btn-outline-primary'} w-100" onclick="openGallery(${z.id})" ${!isSessionLive ? 'disabled' : ''}>
-                                ${z.statusText === 'REJECTED' ? 'Review Resubmissions' : (z.selectedPhoto ? 'Change Selected Photo' : 'Review Staff Submissions')}
+                        ${z.status === 'pendiente' ? `
+                            <button class="btn btn-sm btn-primary w-100 fw-bold animate-pulse" onclick="openGallery('${key}')">
+                              Review Operator Photo
                             </button>
-                        ` : `
+                        ` : z.status === 'terminado' ? `
                             <div class="text-center py-2 bg-white rounded border">
                                 <div class="h3 fw-bold text-success mb-0">${z.count}</div>
-                                <small class="text-muted fw-bold text-uppercase">Final Count</small>
+                                <small class="text-muted fw-bold text-uppercase">AI Counted People</small>
                             </div>
-                            <button class="btn btn-sm btn-link text-danger w-100 mt-2 p-0 small" onclick="resetZone(${z.id})" ${!isSessionLive ? 'disabled' : ''}>Reset & Recount</button>
+                        ` : `
+                            <button class="btn btn-sm btn-light w-100 text-muted" disabled>Waiting Submission</button>
                         `}
                     </div>
                 </div>
@@ -326,110 +309,151 @@
         updateSaveButton();
     }
 
-    function openGallery(id) {
-        activeZoneId = id;
-        tempSelectedPhoto = null;
-        document.getElementById('gallery-zone-name').innerText = zones.find(x => x.id === id).name;
-        document.getElementById('confirm-selection-btn').disabled = true;
+    function openGallery(zoneKey) {
+        activeZoneKey = zoneKey;
+        const targetZone = currentZonesData[zoneKey];
+        document.getElementById('gallery-zone-name').innerText = targetZone.name;
+        document.getElementById('rejection-feedback').value = "";
         
-        const list = document.getElementById('submission-list');
-        list.innerHTML = '';
-        mockSubmissions.forEach(sub => {
-            const item = document.createElement('div');
-            item.className = 'col-4';
-            item.innerHTML = `
-                <div class="submission-item" onclick="selectSubmission(this, '${sub.url}')">
-                    <img src="${sub.url}">
-                    <div class="submission-meta">
-                        <div class="fw-bold">${sub.staff}</div>
-                        <div class="text-muted">${sub.time}</div>
-                    </div>
-                </div>
-            `;
-            list.appendChild(item);
-        });
+        const container = document.getElementById('submission-container');
+        container.innerHTML = `<img src="${targetZone.photoUrl}" class="img-fluid rounded border shadow-xs" style="max-height:300px; object-fit:contain;">`;
+
+        // Reactivamos el botón de la IA por si acaso quedó deshabilitado en consultas previas
+        const btn = document.getElementById('ai-trigger-btn');
+        btn.disabled = false;
+        btn.innerHTML = `✅ Accept & AI Count`;
 
         new bootstrap.Modal(document.getElementById('galleryModal')).show();
     }
 
-    function selectSubmission(el, url) {
-        document.querySelectorAll('.submission-item').forEach(x => x.classList.remove('selected'));
-        el.classList.add('selected');
-        tempSelectedPhoto = url;
-        document.getElementById('confirm-selection-btn').disabled = false;
-    }
-
-    function confirmSelection() {
-        const z = zones.find(x => x.id === activeZoneId);
-        z.selectedPhoto = tempSelectedPhoto;
-        z.statusText = 'SELECTED';
+    function rejectSubmission() {
+        const fbText = document.getElementById('rejection-feedback').value.trim() || "Photo did not meet standards. Please take another shot.";
         
-        setTimeout(() => {
-            z.validated = true;
-            z.statusText = 'SAVED';
-            z.count = Math.floor(Math.random() * 150) + 300;
+        database.ref(`events/${currentEventId}/zones/${activeZoneKey}`).update({
+            status: "activo",
+            photoUrl: "", 
+            feedback: fbText
+        }).then(() => {
             bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
-            saveActiveState();
-            renderZones();
-        }, 800);
+        });
     }
 
-    function rejectSubmissionsNotify() {
-        const z = zones.find(x => x.id === activeZoneId);
-        z.selectedPhoto = null;
-        z.validated = false;
-        z.statusText = 'REJECTED';
+    function approveAndCount() {
+    const targetZone = currentZonesData[activeZoneKey];
+    const base64Photo = targetZone ? targetZone.photoUrl : ""; 
+    
+    const btn = document.getElementById('ai-trigger-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> Analyzing image objects via CATCH AI...`;
+
+    fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64Photo })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("HTTP Error: " + response.status);
+        return response.json();
+    })
+    .then(aiResponse => {
+        console.log("🎯 Response received from Node.js:", aiResponse);
+
+        // --- TU LÓGICA DE FILTRADO EXACTA ---
+        const CONFIDENCE_THRESHOLD = 0.5;
+        const TARGET_CLASS = "person";
+        const results = aiResponse?.images?.[0]?.results || [];
         
-        alert(`Notification dispatched to operators: Please upload a clearer image for "${z.name}".`);
-        bootstrap.Modal.getInstance(document.getElementById('galleryModal')).hide();
-        saveActiveState();
-        renderZones();
-    }
+        let attendance = 0;
+        results.forEach((obj) => {
+            if (obj.confidence < CONFIDENCE_THRESHOLD) return;
+            if (obj.name === TARGET_CLASS) attendance++;
+        });
+        // -------------------------------------
 
-    function resetZone(id) {
-        if(confirm("Discard counting for this zone?")) {
-            const z = zones.find(x => x.id === id);
-            z.validated = false;
-            z.selectedPhoto = null;
-            z.statusText = 'WAITING';
-            saveActiveState();
-            renderZones();
-        }
-    }
+        console.log(`📊 Calculated count: ${attendance}. Trying to save to Firebase...`);
+
+        // Guardamos en Firebase asegurándonos de que si falla, atrape el error aquí mismo
+        return database.ref(`events/${currentEventId}/zones/${activeZoneKey}`).update({
+            status: "terminado",
+            count: attendance, 
+            feedback: "Accepted & Processed via CATCH AI Engine"
+        });
+    })
+    .then(() => {
+        // Si todo sale bien, cierra el modal
+        const modalEl = document.getElementById('galleryModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) modalInstance.hide();
+    })
+    .catch(err => {
+        console.error("❌ Error in the process:", err);
+        alert("System Notice: " + err.message + "\nCheck browser console for details.");
+        btn.disabled = false;
+        btn.innerHTML = `✅ Accept & AI Count`;
+    });
+}
 
     function updateSaveButton() {
-        const allOk = zones.every(z => z.validated);
+        const zonesKeys = Object.keys(currentZonesData);
+        if(zonesKeys.length === 0) return;
+        
+        const allDone = zonesKeys.every(k => currentZonesData[k].status === 'terminado');
         const btn = document.getElementById('save-session-btn');
-        (allOk && zones.length > 0) ? btn.classList.remove('d-none') : btn.classList.add('d-none');
+        allDone ? btn.classList.remove('d-none') : btn.classList.add('d-none');
     }
 
     function saveToSystem() {
-        let recordHistory = localStorage.getItem('catch_saved_event_history');
-        recordHistory = recordHistory ? JSON.parse(recordHistory) : [];
-
         let totalAttendance = 0;
-        let formattedZones = [];
-        zones.forEach(z => {
-            totalAttendance += z.count;
-            formattedZones.push({ name: z.name, count: z.count });
+        let breakdown = [];
+        
+        Object.keys(currentZonesData).forEach(k => {
+            totalAttendance += currentZonesData[k].count;
+            breakdown.push({ name: currentZonesData[k].name, count: currentZonesData[k].count });
         });
 
-        const historicalRecordElement = {
+        // 📝 Armamos la estructura exacta de datos que espera Firebase y records.html
+        const archiveRecord = {
             name: document.getElementById('display-name').innerText,
             date: document.getElementById('display-date').innerText.replace("Event Date: ", ""),
             total: totalAttendance,
-            breakdown: formattedZones
+            breakdown: breakdown
         };
 
-        recordHistory.unshift(historicalRecordElement);
-        localStorage.setItem('catch_saved_event_history', JSON.stringify(recordHistory));
+        // 1. Guardar localmente (por respaldo en tu localStorage)
+        let localHistory = localStorage.getItem('catch_saved_event_history');
+        localHistory = localHistory ? JSON.parse(localHistory) : [];
+        localHistory.unshift(archiveRecord);
+        localStorage.setItem('catch_saved_event_history', JSON.stringify(localHistory));
 
-        localStorage.removeItem('catch_active_session_running');
-        alert("Success: Session records committed to the archive.");
-        location.reload();
+        console.log("📤 Subiendo registro histórico a Firebase...");
+
+        // 2. 🚀 ENVIAR A FIREBASE (El paso que faltaba)
+        // Subimos el registro al nodo 'records' para que records.html lo lea en tiempo real
+        database.ref('records').push(archiveRecord)
+            .then(() => {
+                console.log("✅ Guardado en historial de Firebase. Limpiando sesión activa...");
+                // 3. Una vez asegurado en el historial, limpiamos de la nube la sesión de conteo activo
+                return database.ref('events/' + currentEventId).remove();
+            })
+            .then(() => {
+                alert("Success: Event finalized, verified and committed to cloud historical records.");
+                location.reload();
+            })
+            .catch(err => {
+                console.error("❌ Error al archivar en Firebase:", err);
+                alert("Error saving to cloud history: " + err.message);
+            });
     }
 
-    window.onload = loadActiveState;
+    function cancelSession() {
+        if (confirm("Completely wipe this live cloud session? Operators will lose access immediately.")) {
+            database.ref('events/' + currentEventId).remove().then(() => {
+                location.reload();
+            });
+        }
+    }
+
+    window.onload = listenToLiveSession;
   </script>
 </body>
 </html>
